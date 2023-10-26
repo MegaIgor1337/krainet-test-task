@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: ${db-username:user}
+    password: ${db-password:root}
+    url: ${db-url:jdbc:postgresql://localhost:5432/krainet-db}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
