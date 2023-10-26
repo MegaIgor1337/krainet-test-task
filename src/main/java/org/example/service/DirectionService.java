@@ -1,9 +1,11 @@
 package org.example.service;
 
-import org.example.service.dto.DirectionDto;
+import org.example.service.dto.DirectionRequestDto;
+import org.example.service.dto.DirectionResponseDto;
 
 import java.util.List;
 
 public interface DirectionService {
-    List<DirectionDto> getDirections();
+    List<DirectionResponseDto> getDirections();
+    DirectionResponseDto addDirection(DirectionRequestDto directionRequestDto);
 }

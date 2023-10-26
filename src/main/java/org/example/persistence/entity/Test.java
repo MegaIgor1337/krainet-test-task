@@ -1,4 +1,3 @@
-/*
 package org.example.persistence.entity;
 
 
@@ -20,8 +19,7 @@ public class Test {
     private Long id;
     private String name;
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Direction> directions;
 }
-*/

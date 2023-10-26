@@ -4,25 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bbd9299-0f6d-4d40-8bf6-b120ab7a4746" name="Changes" comment="added dependencies">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/DirectionRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Candidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/DirectionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-directions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.insert-data-directions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/insfrastructure/create_db.sql" afterDir="false" />
+    <list default="true" id="2bbd9299-0f6d-4d40-8bf6-b120ab7a4746" name="Changes" comment="fixed docker compose up">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/TestNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/TestRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/TestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsTestExist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsTestExistValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TestServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-foreign-key-test-id-in-descriptions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-tests.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/PostgreSQLTestContainerExtension.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsTestExistValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/DirectionServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/DirectionMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/util/DirectionTestData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/application-test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/add_tests_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/clear_test_data_tests.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controller/DirectionRestController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/insfrastructure/create_db.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +47,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -80,7 +96,89 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Spring Boot.ApplicationRunner">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\JAVA\krainet-test-task\src\test\java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.IsTestExistValidatorTest">
+    <configuration name="DirectionMapperTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.service.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.service.mapper" />
+      <option name="MAIN_CLASS_NAME" value="org.example.service.mapper.DirectionMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectionMapperTest.shouldMapCorrectlyAllFieldsWhenInvokeFromEntityToDto" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.service.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.service.mapper" />
+      <option name="MAIN_CLASS_NAME" value="org.example.service.mapper.DirectionMapperTest" />
+      <option name="METHOD_NAME" value="shouldMapCorrectlyAllFieldsWhenInvokeFromEntityToDto" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectionRestControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithTestId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="shouldReturnIsCreatedWithTestId" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IsTestExistValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.service.annotation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.service.annotation" />
+      <option name="MAIN_CLASS_NAME" value="org.example.service.annotation.IsTestExistValidatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ApplicationRunner" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ApplicationRunner" />
@@ -94,31 +192,13 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="db" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml.db: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="JUnit.IsTestExistValidatorTest" />
+        <item itemvalue="JUnit.DirectionMapperTest" />
+        <item itemvalue="JUnit.DirectionMapperTest.shouldMapCorrectlyAllFieldsWhenInvokeFromEntityToDto" />
+        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest" />
+        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithTestId" />
       </list>
     </recent_temporary>
   </component>
@@ -134,7 +214,8 @@
       <workItem from="1698264008462" duration="1284000" />
       <workItem from="1698268307430" duration="10705000" />
       <workItem from="1698311980219" duration="7124000" />
-      <workItem from="1698319224930" duration="3331000" />
+      <workItem from="1698319224930" duration="14098000" />
+      <workItem from="1698349613334" duration="10113000" />
     </task>
     <task id="LOCAL-00001" summary="added dependencies">
       <created>1698186064965</created>
@@ -143,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698186064965</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixed docker compose up">
+      <created>1698324722793</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698324722793</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +239,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="added dependencies" />
+    <MESSAGE value="fixed docker compose up" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed docker compose up" />
   </component>
 </project>
