@@ -5,7 +5,6 @@ import org.example.api.controllers.controller.DirectionRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
 import org.example.service.dto.DirectionRequestDto;
-import org.example.service.dto.DirectionResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.example.util.DirectionTestData.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -27,18 +27,16 @@ public class DirectionRestControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @MockBean
-    private DirectionService directionService;
 
     @MockBean
     private TestService testService;
+    @MockBean
+    private DirectionService directionService;
 
     @Test
     void shouldBeStatusIsCreatedWhenCreateDirectionIsSuccessful() throws Exception {
         DirectionRequestDto request = createRequestDirection();
-        DirectionResponseDto response = createResponseDirection();
 
-        when(directionService.addDirection(request)).thenReturn(response);
         when(testService.isTestExist(null)).thenReturn(true);
 
         mockMvc.perform(post(DIRECTION_URL)
@@ -66,4 +64,59 @@ public class DirectionRestControllerTest {
                         .content(requestBody))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void shouldReturnCreatedWhenUpdateIsSuccessful() throws Exception {
+        DirectionRequestDto request = createRequestDirectionWithTest();
+
+        when(directionService.isDirectionExist(DIRECTION_ID)).thenReturn(true);
+        when(testService.isTestExist(request.testId())).thenReturn(true);
+
+        mockMvc.perform(put(DIRECTION_URL_POST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
+
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenRequestIsInvalid() throws Exception {
+        DirectionRequestDto request = createInvalidRequest();
+
+        when(directionService.isDirectionExist(DIRECTION_ID)).thenReturn(true);
+
+        mockMvc.perform(put(DIRECTION_URL_POST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenDirectionDtoIsInvalid() throws Exception {
+        DirectionRequestDto request = createInvalidRequest();
+
+        when(directionService.isDirectionExist(DIRECTION_ID)).thenReturn(true);
+
+        mockMvc.perform(put(DIRECTION_URL_POST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenJsonDirectionDtoIsInvalid() throws Exception {
+        String request = getInvalidJsonRequest();
+
+        when(directionService.isDirectionExist(DIRECTION_ID)).thenReturn(true);
+
+        mockMvc.perform(put(DIRECTION_URL_POST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
+
+
 }

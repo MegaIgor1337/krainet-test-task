@@ -31,14 +31,35 @@ public class DirectionServiceImpl implements DirectionService {
 
     @Override
     @Transactional
-    public DirectionResponseDto addDirection(DirectionRequestDto directionRequestDto) {
+    public DirectionResponseDto saveDirection(DirectionRequestDto directionRequestDto) {
         Direction direction = directionMapper
                 .fromRequestDtoToEntity(directionRequestDto);
         Direction savedDirection = directionRepository.save(direction);
-        if (directionRequestDto.test_id() != null) {
-            testRepository.findById(directionRequestDto.test_id())
-                    .get().getDirections().add(savedDirection);
-        }
         return directionMapper.fromEntityToResponseDto(savedDirection);
+    }
+
+    @Override
+    @Transactional
+    public DirectionResponseDto updateDirection(Long id, DirectionRequestDto directionRequestDto) {
+        Direction direction = directionRepository.findById(id).get();
+        updateDirection(direction, directionRequestDto);
+        Direction updatedDirection = directionRepository.save(direction);
+        return directionMapper.fromEntityToResponseDto(updatedDirection);
+    }
+
+
+    private void updateDirection(Direction direction, DirectionRequestDto directionRequestDto) {
+        direction.setName(directionRequestDto.name());
+        direction.setDescription(directionRequestDto.description());
+        if (directionRequestDto.testId() != null) {
+            direction.setTest(testRepository.findById(directionRequestDto.testId()).get());
+        } else {
+            direction.setTest(null);
+        }
+    }
+
+    @Override
+    public boolean isDirectionExist(Long id) {
+        return directionRepository.existsById(id);
     }
 }

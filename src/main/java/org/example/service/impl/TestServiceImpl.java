@@ -2,6 +2,8 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.persistence.entity.Direction;
+import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.TestService;
 import org.springframework.stereotype.Service;
@@ -17,4 +19,10 @@ public class TestServiceImpl implements TestService {
     public boolean isTestExist(Long id) {
         return testRepository.existsById(id);
     }
+
+    @Override
+    public Test findTestById(Long id) {
+        return testRepository.findById(id).orElse(null);
+    }
+
 }

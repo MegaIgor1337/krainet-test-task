@@ -20,5 +20,5 @@ public record DirectionRequestDto(
         @IsTestExist
         @Min(value = 1, message = "Id must not be less than 1")
         @Schema(defaultValue = "1", description = "Id of the test")
-        Long test_id) {
+        Long testId) {
 }

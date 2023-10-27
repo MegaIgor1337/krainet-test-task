@@ -1,5 +1,6 @@
 package org.example.api.controllers.handler;
 
+import org.example.api.controllers.exceptions.DirectionNotFoundException;
 import org.example.api.controllers.exceptions.ErrorResponse;
 import org.example.api.controllers.exceptions.TestNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TestNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handlerTestNotFountException(TestNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getMessage());
+    }
+
+    @ExceptionHandler(DirectionNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlerTestNotFountException(DirectionNotFoundException exception) {
         return new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getMessage());
