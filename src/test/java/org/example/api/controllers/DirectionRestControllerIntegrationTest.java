@@ -1,5 +1,7 @@
 package org.example.api.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.PostgreSQLTestContainerExtension;
 import org.example.persistence.repository.DirectionRepository;
 import org.example.persistence.repository.TestRepository;
@@ -10,17 +12,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.util.List;
 
 import static org.example.util.DirectionTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -33,6 +38,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 public class DirectionRestControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private TestRepository testRepository;
     @Autowired
@@ -167,8 +174,84 @@ public class DirectionRestControllerIntegrationTest {
                 requestEntity,
                 DirectionResponseDto.class
         );
-        System.out.println(testRepository.findAll());
 
         assertEquals(NOT_FOUND, response.getStatusCode());
+    }
+
+
+    @Test
+    public void shouldReturnOkWhenGetWithPageRequestData() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                DIRECTION_URL_GET_PAGE,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<DirectionResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertEquals(3, responseBody.size());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenParamsAreNotExist() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                DIRECTION_URL,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<DirectionResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertEquals(8, responseBody.size());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenFilterByName() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                DIRECTION_URL_GET_NAME,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<DirectionResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertEquals("backend", responseBody.get(0).name());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenAllParamsAreExist() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                DIRECTION_URL_ALL_PARAMS,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<DirectionResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertTrue(responseBody.isEmpty());
+        assertEquals(OK, response.getStatusCode());
     }
 }

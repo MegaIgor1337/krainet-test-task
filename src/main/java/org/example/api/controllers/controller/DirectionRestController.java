@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.service.DirectionService;
@@ -32,20 +33,28 @@ public class DirectionRestController {
 
     private final DirectionService directionService;
 
-    @Operation(summary = "Get list of directions from DB")
+
+    @Operation(summary = "Get list of directions from DB by Name, page number and size if the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
-    @GetMapping()
-    public ResponseEntity<List<DirectionResponseDto>> get() {
-        log.info("Getting list od directions");
-        List<DirectionResponseDto> directionDtos = directionService.getDirections();
+    @GetMapping
+    public ResponseEntity<List<DirectionResponseDto>> get(
+            @RequestParam(value = "directionName", required = false) String directionName,
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "0")
+            @Min(value = 0, message = "page number must not be less than 0") Integer pageNumber,
+            @RequestParam(value = "pageSize", required = false)
+            @Min(value = 1, message = "page size must not be less than 0") Integer pageSize
+    ) {
+        log.info("Getting list of directions");
+        List<DirectionResponseDto> directionDtos = directionService.getDirections(directionName, pageNumber, pageSize);
         return ResponseEntity.ok(directionDtos);
     }
+
 
     @Operation(summary = "Add direction")
     @ApiResponse(responseCode = "201", description = "CREATE", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<DirectionResponseDto> add(@RequestBody
                                                     @Valid
                                                     DirectionRequestDto directionRequestDto) {

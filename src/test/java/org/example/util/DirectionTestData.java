@@ -6,11 +6,25 @@ import org.example.persistence.entity.Test;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 
+import java.util.List;
+
 @UtilityClass
 public class DirectionTestData {
     public static final String DIRECTION_URL = "/api/v1/directions";
     public static final Long DIRECTION_ID = 1L;
+    public static final Integer PAGE_NUMBER = 1;
+    public static final Integer PAGE_SIZE = 3;
     public static final Long INVALID_DIRECTION_ID = 20L;
+    public static final String DIRECTION_NAME = "backend";
+    public static final String DIRECTION_URL_GET_PAGE = String
+            .format("%s?pageNumber=%s&pageSize=%s", DIRECTION_URL, PAGE_NUMBER, PAGE_SIZE);
+    public static final String DIRECTION_URL_GET_PAGE_INVALID_PARAM = String
+            .format("%s?pageNumber=-1&pageSize=3", DIRECTION_URL);
+    public static final String DIRECTION_URL_GET_NAME = String
+            .format("%s?directionName=%s", DIRECTION_URL, DIRECTION_NAME);
+    public static final String DIRECTION_URL_ALL_PARAMS = String
+            .format("%s?directionName=%s?pageNumber=%s&pageSize=%s", DIRECTION_URL,
+                    DIRECTION_NAME, PAGE_NUMBER, PAGE_SIZE);
     public static final String DIRECTION_URL_POST = String.format("%s/%s", DIRECTION_URL, DIRECTION_ID);
     public static final String DIRECTION_INVALID_ID_URL_POST = String.format("%s/%s", DIRECTION_URL,
             INVALID_DIRECTION_ID);
@@ -114,4 +128,29 @@ public class DirectionTestData {
                 .build();
     }
 
+    public static List<DirectionResponseDto> createListOfDirectionResponseDto() {
+        return List.of(
+                DirectionResponseDto.builder()
+                        .name(DIRECTION_NAME)
+                        .description("Good")
+                        .build(),
+                DirectionResponseDto.builder()
+                        .name(DIRECTION_NAME)
+                        .description("Nice")
+                        .build()
+        );
+    }
+
+    public static List<Direction> createListOfDirections() {
+        return List.of(
+                Direction.builder()
+                        .name(DIRECTION_NAME)
+                        .description("Good")
+                        .build(),
+                Direction.builder()
+                        .name(DIRECTION_NAME)
+                        .description("Nice")
+                        .build()
+        );
+    }
 }

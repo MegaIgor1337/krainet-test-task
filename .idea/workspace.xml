@@ -4,33 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bbd9299-0f6d-4d40-8bf6-b120ab7a4746" name="Changes" comment="added post method for directions, added tests for that method">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/DirectionNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsDirectionExist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsDirectionExistValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsDirectionExistValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/util/TestTestData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/clear_tests_test_data.sql" afterDir="false" />
+    <list default="true" id="2bbd9299-0f6d-4d40-8bf6-b120ab7a4746" name="Changes" comment="added put method for directions, added tests for that method">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/PageRequestData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/handler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/DirectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/DirectionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/TestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/TestRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/TestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TestServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TestServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/DirectionServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/DirectionServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/DirectionMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/DirectionMapperTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/util/DirectionTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/util/DirectionTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/testdata/clear_test_data_tests.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +95,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnBadRequestWhenTestIdIsNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnOkWhenParamsAreNotValid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
@@ -121,13 +105,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example.api.controllers" />
       <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnBadRequestWhenTestIdIsNotExist" />
+      <option name="METHOD_NAME" value="shouldReturnOkWhenParamsAreNotValid" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithTestId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DirectionRestControllerTest.shouldReturnOkWhenGetIsSuccessfulWithName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
@@ -136,40 +120,40 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnIsCreatedWithTestId" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerTest" />
+      <option name="METHOD_NAME" value="shouldReturnOkWhenGetIsSuccessfulWithName" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnNotFoundWhenDirectionIdIsNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DirectionServiceImplTest.testGetDirectionsWithNameAndPageSize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="PATTERN" value="org.example.service.impl.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnNotFoundWhenDirectionIdIsNotExist" />
+      <option name="PACKAGE_NAME" value="org.example.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="org.example.service.impl.DirectionServiceImplTest" />
+      <option name="METHOD_NAME" value="testGetDirectionsWithNameAndPageSize" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnNotFoundWhenTestIdIsNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DirectionServiceImplTest.testGetTrueWhenDirectionExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="PATTERN" value="org.example.service.impl.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnNotFoundWhenTestIdIsNotExist" />
+      <option name="PACKAGE_NAME" value="org.example.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="org.example.service.impl.DirectionServiceImplTest" />
+      <option name="METHOD_NAME" value="testGetTrueWhenDirectionExist" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -191,10 +175,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DirectionRestControllerIntegrationTest" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnNotFoundWhenTestIdIsNotExist" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithTestId" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnNotFoundWhenDirectionIdIsNotExist" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnBadRequestWhenTestIdIsNotExist" />
+        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnOkWhenParamsAreNotValid" />
+        <item itemvalue="JUnit.DirectionServiceImplTest.testGetTrueWhenDirectionExist" />
+        <item itemvalue="JUnit.DirectionServiceImplTest.testGetDirectionsWithNameAndPageSize" />
+        <item itemvalue="JUnit.DirectionRestControllerTest.shouldReturnOkWhenGetIsSuccessfulWithName" />
       </list>
     </recent_temporary>
   </component>
@@ -213,7 +197,8 @@
       <workItem from="1698319224930" duration="14098000" />
       <workItem from="1698349613334" duration="13377000" />
       <workItem from="1698364025651" duration="5126000" />
-      <workItem from="1698394843082" duration="8424000" />
+      <workItem from="1698394843082" duration="9815000" />
+      <workItem from="1698412788817" duration="16777000" />
     </task>
     <task id="LOCAL-00001" summary="added dependencies">
       <created>1698186064965</created>
@@ -236,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698359869384</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added put method for directions, added tests for that method">
+      <created>1698405505909</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698405505909</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,25 +238,36 @@
     <MESSAGE value="added dependencies" />
     <MESSAGE value="fixed docker compose up" />
     <MESSAGE value="added post method for directions, added tests for that method" />
-    <option name="LAST_COMMIT_MESSAGE" value="added post method for directions, added tests for that method" />
+    <MESSAGE value="added put method for directions, added tests for that method" />
+    <option name="LAST_COMMIT_MESSAGE" value="added put method for directions, added tests for that method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java</url>
-          <line>45</line>
+          <line>62</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java</url>
-          <line>44</line>
+          <line>61</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/TestNotFoundException.java</url>
           <line>4</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

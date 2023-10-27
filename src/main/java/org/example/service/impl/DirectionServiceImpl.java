@@ -9,6 +9,8 @@ import org.example.service.DirectionService;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 import org.example.service.mapper.DirectionMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +25,25 @@ public class DirectionServiceImpl implements DirectionService {
     private final DirectionMapper directionMapper;
     private final TestRepository testRepository;
 
+
     @Override
-    public List<DirectionResponseDto> getDirections() {
-        return directionRepository.findAll().stream()
-                .map(directionMapper::fromEntityToResponseDto).toList();
+    public List<DirectionResponseDto> getDirections(String name, Integer pageNumber, Integer pageSize) {
+        pageSize = pageSize != null  ? pageSize : directionRepository.getCountOfDirections();
+        if (name != null && pageSize != 0) {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            return directionRepository.findAllByName(name, pageable)
+                    .map(directionMapper::fromEntityToResponseDto).getContent();
+        } else if (name == null && pageSize != 0) {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            return directionRepository.findAll(pageable)
+                    .map(directionMapper::fromEntityToResponseDto).getContent();
+        } else if (name != null) {
+            return directionRepository.findAllByName(name).stream()
+                    .map(directionMapper::fromEntityToResponseDto).toList();
+        } else  {
+            return directionRepository.findAll().stream()
+                    .map(directionMapper::fromEntityToResponseDto).toList();
+        }
     }
 
     @Override
