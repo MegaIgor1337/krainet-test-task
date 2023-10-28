@@ -70,6 +70,14 @@ public class DirectionTestData {
                 .build();
     }
 
+    public static Direction createDirectionWithoutIdWithTest(Test test) {
+        return Direction.builder()
+                .name("Test Direction")
+                .description("Nice Direction")
+                .test(test)
+                .build();
+    }
+
     public static Direction createAddedDirectionWithId() {
         return Direction.builder()
                 .id(1L)
@@ -97,8 +105,8 @@ public class DirectionTestData {
     public static Direction createUpdatedDIrection(Test test) {
         return Direction.builder()
                 .id(1L)
-                .name("Update Test Direction")
-                .description("Update Nice Direction")
+                .name("Test Direction")
+                .description("Nice Direction")
                 .test(test)
                 .build();
     }

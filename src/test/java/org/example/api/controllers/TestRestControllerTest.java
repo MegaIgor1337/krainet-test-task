@@ -17,6 +17,7 @@ import static org.example.util.TestTestData.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = TestRestController.class)
@@ -70,6 +71,57 @@ public class TestRestControllerTest {
         mockMvc.perform(post(TEST_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnCreatedWhenUpdateIsSuccessfulWithoutDirections() throws Exception {
+        TestRequestDto request = createRequestTestWithoutDirections();
+
+        when(testService.isTestExist(TEST_ID)).thenReturn(true);
+
+        mockMvc.perform(put(TEST_URL_PUT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void shouldReturnCreatedWhenUpdateIsSuccessfulWithDirections() throws Exception {
+        TestRequestDto request = createRequestTestWithDirections();
+
+        when(testService.isTestExist(TEST_ID)).thenReturn(true);
+        when(directionService.isDirectionExist(any(Long.class))).thenReturn(true);
+
+        mockMvc.perform(put(TEST_URL_PUT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenUpdateIsSuccessfulWithNotExistsDirections() throws Exception {
+        TestRequestDto request = createRequestTestWithDirections();
+
+        when(testService.isTestExist(TEST_ID)).thenReturn(true);
+        when(directionService.isDirectionExist(any(Long.class))).thenReturn(false);
+
+        mockMvc.perform(put(TEST_URL_PUT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenUpdateIsSuccessfulWithNotExistsTestId() throws Exception {
+        TestRequestDto request = createRequestTestWithDirections();
+
+        when(testService.isTestExist(TEST_ID)).thenReturn(true);
+        when(directionService.isDirectionExist(any(Long.class))).thenReturn(false);
+
+        mockMvc.perform(put(TEST_URL_PUT_INVALID_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
     }
 }

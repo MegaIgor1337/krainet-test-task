@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="6" author="tawerka1338228321@mail.ru">
+        <dropForeignKeyConstraint
+                baseTableName="directions"
+                constraintName="fk_test_id"
+        />
+    </changeSet>
+
+    <changeSet id="7" author="tawerka1337228321@mail.ru">
+        <addForeignKeyConstraint
+                baseTableName="directions"
+                baseColumnNames="test_id"
+                constraintName="fk_test_id"
+                referencedTableName="tests"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
+    </changeSet>
+</databaseChangeLog>

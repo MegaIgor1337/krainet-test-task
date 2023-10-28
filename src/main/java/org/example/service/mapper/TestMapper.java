@@ -25,6 +25,7 @@ public abstract class TestMapper {
         test.setDescription(dto.description());
 
         if (dto.directionsId() == null) {
+            test.setDirections(null);
             return test;
         }
 

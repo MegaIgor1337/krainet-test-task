@@ -27,9 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpStatus.*;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@Slf4j
 @ExtendWith(PostgreSQLTestContainerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DirectionRestControllerIntegrationTest {
@@ -123,6 +123,8 @@ public class DirectionRestControllerIntegrationTest {
 
     @Test
     @Sql(scripts = "classpath:testdata/add_tests_test_data.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:testdata/clear_directions_test_data.sql", executionPhase = AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:testdata/clear_tests_test_data.sql", executionPhase = AFTER_TEST_METHOD)
     public void shouldReturnCreatedWhenUpdateWithTest() {
         DirectionRequestDto directionRequestDto = createRequestForUpdateDirectionWithTest();
 

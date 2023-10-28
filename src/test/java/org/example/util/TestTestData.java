@@ -13,6 +13,11 @@ import java.util.Set;
 @UtilityClass
 public class TestTestData {
     public static final String TEST_URL = "/api/v1/tests";
+    public static final Long TEST_ID = 1L;
+    public static final Long INVALID_ID = 100L;
+    public static final String TEST_URL_PUT = String.format("/api/v1/tests/%s", TEST_ID);
+    public static final String TEST_URL_PUT_INVALID_ID = String.format("/api/v1/tests/%s", INVALID_ID);
+
 
     public static Test createTestWithoutDirections() {
         return Test.builder()
@@ -150,4 +155,17 @@ public class TestTestData {
                         )
                 ).build();
     }
+
+    public static TestRequestDto createRequestTestWithInvalidDirections() {
+        return TestRequestDto.builder()
+                .name("Test1")
+                .description("Description1")
+                .directionsId(
+                        Set.of(
+                                100L,
+                                200L
+                        )
+                ).build();
+    }
+
 }

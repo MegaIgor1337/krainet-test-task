@@ -20,6 +20,7 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final TestMapper testMapper;
+
     @Override
     public boolean isTestExist(Long id) {
         return testRepository.existsById(id);
@@ -37,5 +38,14 @@ public class TestServiceImpl implements TestService {
     public List<TestResponseDto> getTests() {
         return testRepository.findAll().stream()
                 .map(testMapper::fromEntityToResponseDto).toList();
+    }
+
+    @Override
+    @Transactional
+    public TestResponseDto updateTest(Long id, TestRequestDto testRequestDto) {
+        Test requestTest = testMapper.fromRequestDtoToEntity(testRequestDto);
+        requestTest.setId(id);
+        Test updatedTest = testRepository.save(requestTest);
+        return testMapper.fromEntityToResponseDto(updatedTest);
     }
 }

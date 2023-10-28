@@ -69,4 +69,22 @@ public class TestServiceImplTest {
         assertEquals(testRequestDto.directionsId().size(), responseDto.directions().size());
     }
 
+    @org.junit.jupiter.api.Test
+    public void testUpdateTestSuccess() {
+        TestRequestDto testRequestDto = createRequestTestWithDirections();
+        Test testWithoutId = createTestWithoutIdWithDirections();
+        Test testWithId = createTestWithDirections();
+        TestResponseDto expectedDto = createResponseTestDtoWithDirections();
+
+        when(testMapper.fromRequestDtoToEntity(testRequestDto)).thenReturn(testWithoutId);
+        when(testRepository.save(testWithoutId)).thenReturn(testWithId);
+        when(testMapper.fromEntityToResponseDto(testWithId)).thenReturn(expectedDto);
+
+        TestResponseDto responseDto = testService.updateTest(TEST_ID, testRequestDto);
+
+        assertNotNull(responseDto);
+        assertEquals(testRequestDto.name(), responseDto.name());
+        assertEquals(testRequestDto.description(), responseDto.description());
+        assertEquals(testRequestDto.directionsId().size(), responseDto.directions().size());
+    }
 }

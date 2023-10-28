@@ -61,23 +61,13 @@ public class DirectionServiceImpl implements DirectionService {
     @Override
     @Transactional
     public DirectionResponseDto updateDirection(Long id, DirectionRequestDto directionRequestDto) {
-        Direction direction = directionRepository.findById(id).get();
-        updateDirection(direction, directionRequestDto);
-        Direction updatedDirection = directionRepository.save(direction);
-        log.info("updated direction - {}", direction);
+        Direction directionRequest = directionMapper.fromRequestDtoToEntity(directionRequestDto);
+        directionRequest.setId(id);
+        Direction updatedDirection = directionRepository.save(directionRequest);
+        log.info("updated direction - {}", updatedDirection);
         return directionMapper.fromEntityToResponseDto(updatedDirection);
     }
 
-
-    private void updateDirection(Direction direction, DirectionRequestDto directionRequestDto) {
-        direction.setName(directionRequestDto.name());
-        direction.setDescription(directionRequestDto.description());
-        if (directionRequestDto.testId() != null) {
-            direction.setTest(testRepository.findById(directionRequestDto.testId()).get());
-        } else {
-            direction.setTest(null);
-        }
-    }
 
     @Override
     public boolean isDirectionExist(Long id) {

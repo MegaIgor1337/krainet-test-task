@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.example.util.DirectionTestData.*;
 import static org.example.util.TestTestData.createTestWithoutDirections;
@@ -57,20 +56,18 @@ public class DirectionServiceImplTest {
     @Test
     public void testUpdateDirectionSuccess() {
         DirectionRequestDto requestDto = createRequestForUpdateDirectionWithTest();
-        Direction direction = createAddedDirectionWithId();
+        Direction directionWithoutId = createDirectionWithoutIdWithTest(createTestWithoutDirections());
         Direction updatedDirection = createUpdatedDIrection(createTestWithoutDirections());
         DirectionResponseDto directionResponseDto = createResponseDirectionAfterUpdate();
 
-        when(directionRepository.findById(1L)).thenReturn(Optional.of(direction));
-        when(testRepository.findById(1L)).thenReturn(Optional.of(createTestWithoutDirections()));
-        when(directionRepository.save(any(Direction.class))).thenReturn(updatedDirection);
+        when(directionMapper.fromRequestDtoToEntity(requestDto)).thenReturn(directionWithoutId);
+        when(directionRepository.save(directionWithoutId)).thenReturn(updatedDirection);
         when(directionMapper.fromEntityToResponseDto(updatedDirection)).thenReturn(directionResponseDto);
 
         DirectionResponseDto response = directionService.updateDirection(1L, requestDto);
 
-        verify(directionRepository, times(1)).findById(1L);
-        verify(testRepository, times(1)).findById(1L);
-        verify(directionRepository, times(1)).save(direction);
+        verify(directionMapper, times(1)).fromRequestDtoToEntity(requestDto);
+        verify(directionRepository, times(1)).save(updatedDirection);
         verify(directionMapper, times(1)).fromEntityToResponseDto(updatedDirection);
 
         assertEquals(requestDto.name(), response.name());
@@ -96,6 +93,9 @@ public class DirectionServiceImplTest {
         assertEquals(expectedDirections.get(0).name(), directionResponseDtos.get(0).name());
         assertEquals(expectedDirections.size(), directionResponseDtos.size());
     }
+
+
+
 
     @Test
     public void testGetTrueWhenDirectionExist() {

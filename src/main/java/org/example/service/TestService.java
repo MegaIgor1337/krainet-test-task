@@ -11,4 +11,5 @@ public interface TestService {
     boolean isTestExist(Long id);
     TestResponseDto saveTest(TestRequestDto testRequestDto);
     List<TestResponseDto> getTests();
+    TestResponseDto updateTest(Long id, TestRequestDto testRequestDto);
 }
