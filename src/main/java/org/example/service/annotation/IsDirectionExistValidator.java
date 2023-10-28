@@ -11,7 +11,7 @@ public class IsDirectionExistValidator implements ConstraintValidator<IsDirectio
     private final DirectionService directionService;
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext constraintValidatorContext) {
-        if (directionService.isDirectionExist(id)) {
+        if (id != null && directionService.isDirectionExist(id)) {
             return true;
         } else {
             throw new DirectionNotFoundException(String.format("Direction with id %s not found", id));

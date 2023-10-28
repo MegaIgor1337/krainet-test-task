@@ -1,19 +1,19 @@
 package org.example.service.mapper;
 
 import org.example.persistence.entity.Direction;
-import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.TestService;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public abstract class DirectionMapper {
     @Autowired
-    protected TestService testService;
+    protected TestRepository testRepository;
 
     public abstract DirectionResponseDto fromEntityToResponseDto(Direction direction);
 
@@ -23,9 +23,8 @@ public abstract class DirectionMapper {
         direction.setDescription(dto.description());
 
         if (dto.testId() != null) {
-            direction.setTest(testService.findTestById(dto.testId()));
-        } else {
-            direction.setTest(null);
+            direction.setTest(testRepository
+                    .findById(dto.testId()).orElse(null));
         }
 
         return direction;

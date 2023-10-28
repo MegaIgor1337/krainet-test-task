@@ -7,4 +7,5 @@
     <include file="changelogs/db.insert-data-directions.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/db.create-table-tests.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/db.add-foreign-key-test-id-in-descriptions.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.change-foreign-ket-test-id-directions.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.service.DirectionService;
@@ -71,7 +72,7 @@ public class DirectionRestController {
     public ResponseEntity<DirectionResponseDto> update(@RequestBody @Valid
                                                        DirectionRequestDto directionRequestDto,
                                                        @PathVariable(name = "id")
-                                                       @IsDirectionExist Long id) {
+                                                       @IsDirectionExist @NotNull Long id) {
         log.debug("Updating Direction with id {} by the data: {} ", id, directionRequestDto);
         DirectionResponseDto responseDirection = directionService.updateDirection(id, directionRequestDto);
         return new ResponseEntity<>(responseDirection, CREATED);

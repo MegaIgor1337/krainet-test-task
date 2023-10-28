@@ -29,7 +29,6 @@ public class DirectionRestControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-
     @MockBean
     private TestService testService;
     @MockBean
@@ -38,8 +37,6 @@ public class DirectionRestControllerTest {
     @Test
     void shouldBeStatusIsCreatedWhenCreateDirectionIsSuccessful() throws Exception {
         DirectionRequestDto request = createRequestDirection();
-
-        when(testService.isTestExist(null)).thenReturn(true);
 
         mockMvc.perform(post(DIRECTION_URL)
                         .contentType(MediaType.APPLICATION_JSON)

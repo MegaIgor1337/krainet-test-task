@@ -2,6 +2,7 @@ package org.example.api.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.example.PostgreSQLTestContainerExtension;
 import org.example.persistence.repository.DirectionRepository;
 import org.example.persistence.repository.TestRepository;
@@ -17,7 +18,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,12 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@SqlGroup({
-        @Sql(scripts = "classpath:testdata/add_tests_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(scripts = "classpath:testdata/clear_tests_test_data.sql", executionPhase = AFTER_TEST_METHOD)})
+@Slf4j
 @ExtendWith(PostgreSQLTestContainerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DirectionRestControllerIntegrationTest {
@@ -58,6 +55,7 @@ public class DirectionRestControllerIntegrationTest {
                 DirectionResponseDto.class
         );
 
+
         DirectionResponseDto addedDirection = response.getBody();
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -66,6 +64,7 @@ public class DirectionRestControllerIntegrationTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:testdata/add_tests_test_data.sql", executionPhase = BEFORE_TEST_METHOD)
     public void shouldReturnIsCreatedWithTestId() {
         DirectionRequestDto directionRequestDto = createRequestDirectionWithTestId();
 
@@ -123,6 +122,7 @@ public class DirectionRestControllerIntegrationTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:testdata/add_tests_test_data.sql", executionPhase = BEFORE_TEST_METHOD)
     public void shouldReturnCreatedWhenUpdateWithTest() {
         DirectionRequestDto directionRequestDto = createRequestForUpdateDirectionWithTest();
 
@@ -232,7 +232,7 @@ public class DirectionRestControllerIntegrationTest {
                 .readValue(response.getBody(), new TypeReference<>() {
                 });
 
-        assertEquals("backend", responseBody.get(0).name());
+        assertEquals(DIRECTION_NAME, responseBody.get(0).name());
         assertEquals(OK, response.getStatusCode());
     }
 

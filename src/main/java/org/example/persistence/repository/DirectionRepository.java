@@ -19,4 +19,5 @@ public interface DirectionRepository extends JpaRepository<Direction, Long> {
     List<Direction> findAllByName(String name);
     @Query("SELECT COUNT(*) FROM Direction ")
     int getCountOfDirections();
+    List<Direction> findAllByTestName(String name);
 }

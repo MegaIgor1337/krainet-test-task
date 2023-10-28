@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.example.util.DirectionTestData.*;
-import static org.example.util.TestTestData.createTest;
+import static org.example.util.TestTestData.createTestWithoutDirections;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -58,11 +58,11 @@ public class DirectionServiceImplTest {
     public void testUpdateDirectionSuccess() {
         DirectionRequestDto requestDto = createRequestForUpdateDirectionWithTest();
         Direction direction = createAddedDirectionWithId();
-        Direction updatedDirection = createUpdatedDIrection(createTest());
+        Direction updatedDirection = createUpdatedDIrection(createTestWithoutDirections());
         DirectionResponseDto directionResponseDto = createResponseDirectionAfterUpdate();
 
         when(directionRepository.findById(1L)).thenReturn(Optional.of(direction));
-        when(testRepository.findById(1L)).thenReturn(Optional.of(createTest()));
+        when(testRepository.findById(1L)).thenReturn(Optional.of(createTestWithoutDirections()));
         when(directionRepository.save(any(Direction.class))).thenReturn(updatedDirection);
         when(directionMapper.fromEntityToResponseDto(updatedDirection)).thenReturn(directionResponseDto);
 

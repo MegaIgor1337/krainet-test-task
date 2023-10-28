@@ -28,7 +28,9 @@ public class DirectionServiceImpl implements DirectionService {
 
     @Override
     public List<DirectionResponseDto> getDirections(String name, Integer pageNumber, Integer pageSize) {
-        pageSize = pageSize != null  ? pageSize : directionRepository.getCountOfDirections();
+        log.info("Get list of directions on service method with name - {}, page number - {}, page size - {}",
+                name, pageNumber, pageSize);
+        pageSize = pageSize != null ? pageSize : directionRepository.getCountOfDirections();
         if (name != null && pageSize != 0) {
             Pageable pageable = PageRequest.of(pageNumber, pageSize);
             return directionRepository.findAllByName(name, pageable)
@@ -40,7 +42,7 @@ public class DirectionServiceImpl implements DirectionService {
         } else if (name != null) {
             return directionRepository.findAllByName(name).stream()
                     .map(directionMapper::fromEntityToResponseDto).toList();
-        } else  {
+        } else {
             return directionRepository.findAll().stream()
                     .map(directionMapper::fromEntityToResponseDto).toList();
         }
@@ -52,6 +54,7 @@ public class DirectionServiceImpl implements DirectionService {
         Direction direction = directionMapper
                 .fromRequestDtoToEntity(directionRequestDto);
         Direction savedDirection = directionRepository.save(direction);
+        log.info("saved direction - {}", savedDirection);
         return directionMapper.fromEntityToResponseDto(savedDirection);
     }
 
@@ -61,6 +64,7 @@ public class DirectionServiceImpl implements DirectionService {
         Direction direction = directionRepository.findById(id).get();
         updateDirection(direction, directionRequestDto);
         Direction updatedDirection = directionRepository.save(direction);
+        log.info("updated direction - {}", direction);
         return directionMapper.fromEntityToResponseDto(updatedDirection);
     }
 

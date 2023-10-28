@@ -8,8 +8,7 @@ spring:
     url: ${db-url:jdbc:postgresql://localhost:5432/krainet-db}
     driver-class-name: org.postgresql.Driver
   liquibase:
-    enabled: true
-    change-log: classpath:db/changelog/db.changelog-master.xml
+    change-log: db/changelog/db.changelog-master.xml
 logging:
   level:
     org.org.example: info

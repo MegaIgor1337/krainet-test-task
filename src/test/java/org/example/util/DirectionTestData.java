@@ -18,8 +18,6 @@ public class DirectionTestData {
     public static final String DIRECTION_NAME = "backend";
     public static final String DIRECTION_URL_GET_PAGE = String
             .format("%s?pageNumber=%s&pageSize=%s", DIRECTION_URL, PAGE_NUMBER, PAGE_SIZE);
-    public static final String DIRECTION_URL_GET_PAGE_INVALID_PARAM = String
-            .format("%s?pageNumber=-1&pageSize=3", DIRECTION_URL);
     public static final String DIRECTION_URL_GET_NAME = String
             .format("%s?directionName=%s", DIRECTION_URL, DIRECTION_NAME);
     public static final String DIRECTION_URL_ALL_PARAMS = String
@@ -144,10 +142,12 @@ public class DirectionTestData {
     public static List<Direction> createListOfDirections() {
         return List.of(
                 Direction.builder()
+                        .id(1L)
                         .name(DIRECTION_NAME)
                         .description("Good")
                         .build(),
                 Direction.builder()
+                        .id(2L)
                         .name(DIRECTION_NAME)
                         .description("Nice")
                         .build()
