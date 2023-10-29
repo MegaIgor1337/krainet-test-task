@@ -5,6 +5,7 @@ import org.example.api.controllers.controller.TestRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
 import org.example.service.dto.TestRequestDto;
+import org.example.service.dto.TestRequestFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,11 +14,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.example.util.TestTestData.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = TestRestController.class)
@@ -123,5 +127,70 @@ public class TestRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithoutParams() throws Exception {
+        when(testService.getTests(null, 0, null))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get(TEST_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithName() throws Exception {
+        when(testService.getTests(new TestRequestFilter("Test 1", null),
+                0, null))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get(TEST_URL_PAGE_TEST_FILTER_NAME)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithDirectionsId() throws Exception {
+        when(testService.getTests(new TestRequestFilter(null, List.of(1L)),
+                0, null))
+                .thenReturn(new ArrayList<>());
+        when(directionService.isDirectionExist(1L)).thenReturn(true);
+
+        mockMvc.perform(get(TEST_URL_PAGE_TEST_FILTER_ID_DIRECTIONS)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithPageData() throws Exception {
+        when(testService.getTests(new TestRequestFilter(null, null),
+                0, 2))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get(TEST_URL_PAGE_DATA)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithPageSize() throws Exception {
+        when(testService.getTests(new TestRequestFilter(null, null),
+                0, 3))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get(TEST_URL_PAGE_SIZE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
     }
 }

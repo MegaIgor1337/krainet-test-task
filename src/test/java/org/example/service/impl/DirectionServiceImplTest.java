@@ -95,8 +95,6 @@ public class DirectionServiceImplTest {
     }
 
 
-
-
     @Test
     public void testGetTrueWhenDirectionExist() {
         when(directionRepository.existsById(1L)).thenReturn(true);

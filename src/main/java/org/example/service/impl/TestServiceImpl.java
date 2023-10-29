@@ -6,12 +6,18 @@ import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.TestService;
 import org.example.service.dto.TestRequestDto;
+import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
 import org.example.service.mapper.TestMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,14 +37,41 @@ public class TestServiceImpl implements TestService {
     public TestResponseDto saveTest(TestRequestDto testRequestDto) {
         Test test = testMapper.fromRequestDtoToEntity(testRequestDto);
         Test savedTest = testRepository.save(test);
+        log.info("saved test - {}", savedTest);
         return testMapper.fromEntityToResponseDto(savedTest);
     }
 
     @Override
-    public List<TestResponseDto> getTests() {
-        return testRepository.findAll().stream()
-                .map(testMapper::fromEntityToResponseDto).toList();
+    public List<TestResponseDto> getTests(TestRequestFilter testRequestFilter, Integer pageNumber, Integer pageSize) {
+        log.info("Get list of tests on service method with filter - {}, page number - {}, page size - {}",
+                testRequestFilter, pageNumber, pageSize);
+
+        pageNumber = Optional.ofNullable(pageNumber).orElse(0);
+        pageSize = Optional.ofNullable(pageSize).orElse(testRepository.getCountOfDirections());
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Test> testPage = getPageOfTests(testRequestFilter, pageable);
+
+        return testPage.map(testMapper::fromEntityToResponseDto).getContent();
     }
+
+    private Page<Test> getPageOfTests(TestRequestFilter testRequestFilter, Pageable pageable) {
+        String name = testRequestFilter.testName();
+        List<Long> directionsId = testRequestFilter.directionsId();
+        if (name != null && !name.isBlank() && directionsId != null && !directionsId.isEmpty()) {
+            List<Test> filterTests = testRepository.findTestsByDirectionIdsAndName(directionsId, name);
+            return new PageImpl<>(filterTests, pageable, filterTests.size());
+        } else if (name != null && !name.isBlank()) {
+            return testRepository.findAllByName(name, pageable);
+        } else if (directionsId != null && !directionsId.isEmpty()) {
+            List<Test> filterTests = testRepository.findTestsByDirectionIds(directionsId);
+            return new PageImpl<>(filterTests, pageable, filterTests.size());
+        } else {
+            return testRepository.findAll(pageable);
+        }
+    }
+
 
     @Override
     @Transactional
@@ -46,6 +79,7 @@ public class TestServiceImpl implements TestService {
         Test requestTest = testMapper.fromRequestDtoToEntity(testRequestDto);
         requestTest.setId(id);
         Test updatedTest = testRepository.save(requestTest);
+        log.info("Updated test - {}", updatedTest);
         return testMapper.fromEntityToResponseDto(updatedTest);
     }
 }

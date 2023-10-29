@@ -1,8 +1,11 @@
+INSERT INTO directions (name, description, test_id)
+VALUES
+    ('backend', 'Backend Development', 2),
+    ('frontend', 'Frontend Development', 1),
+    ('QA', 'Testers', 3);
+
 INSERT INTO directions (name, description)
 VALUES
-    ('backend', 'Backend Development'),
-    ('frontend', 'Frontend Development'),
-    ('QA', 'Testers'),
     ('UI', 'User Interface Design'),
     ('HR', 'Human Resources'),
     ('PM', 'Project Management'),

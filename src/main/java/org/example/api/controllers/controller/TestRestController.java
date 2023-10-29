@@ -7,12 +7,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.service.TestService;
 import org.example.service.annotation.IsTestExist;
 import org.example.service.dto.TestRequestDto;
+import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,13 +47,20 @@ public class TestRestController {
     }
 
 
-    @Operation(summary = "Get list of directions from DB by Name, page number and size if the page")
+    @Operation(summary = "Get list of tests from DB by Name, directions page number and size if the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
-            array = @ArraySchema(schema = @Schema(implementation = TestRequestDto.class))))
+            array = @ArraySchema(schema = @Schema(implementation = TestResponseDto.class))))
     @GetMapping
-    public ResponseEntity<List<TestResponseDto>> get() {
-        List<TestResponseDto> testResponseDtos = testService.getTests();
-        return ResponseEntity.ok(testResponseDtos);
+    public ResponseEntity<List<TestResponseDto>> get(
+            @Valid TestRequestFilter testRequestFilter,
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "0")
+            @Min(value = 0, message = "page number must not be less than 0") Integer pageNumber,
+            @RequestParam(value = "pageSize", required = false)
+            @Min(value = 1, message = "page size must not be less than 1") Integer pageSize
+    ) {
+        log.info("Getting list of directions");
+        List<TestResponseDto> testsDtos = testService.getTests(testRequestFilter, pageNumber, pageSize);
+        return ResponseEntity.ok(testsDtos);
     }
 
     @Operation(summary = "Update Test", description = "Update Test by id")
@@ -66,5 +75,4 @@ public class TestRestController {
         TestResponseDto responseTest = testService.updateTest(id, testRequestDto);
         return new ResponseEntity<>(responseTest, CREATED);
     }
-
 }

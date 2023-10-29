@@ -5,7 +5,10 @@ import org.example.persistence.entity.Direction;
 import org.example.persistence.entity.Test;
 import org.example.service.dto.DirectionResponseDto;
 import org.example.service.dto.TestRequestDto;
+import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 import java.util.Set;
@@ -15,8 +18,15 @@ public class TestTestData {
     public static final String TEST_URL = "/api/v1/tests";
     public static final Long TEST_ID = 1L;
     public static final Long INVALID_ID = 100L;
-    public static final String TEST_URL_PUT = String.format("/api/v1/tests/%s", TEST_ID);
-    public static final String TEST_URL_PUT_INVALID_ID = String.format("/api/v1/tests/%s", INVALID_ID);
+    public static final String TEST_URL_PUT = String.format("%s/%s", TEST_URL, TEST_ID);
+    public static final String TEST_URL_PUT_INVALID_ID = String.format("%s/%s", TEST_URL, INVALID_ID);
+    public static final String TEST_URL_PAGE_DATA = String.format("%s?pageNumber=0&pageSize=2", TEST_URL);
+    public static final String TEST_URL_PAGE_SIZE = String.format("%s?pageSize=3", TEST_URL);
+    public static final String TEST_URL_PAGE_TEST_FILTER_NAME = String.format("%s?testName=Test 1", TEST_URL);
+    public static final String TEST_URL_PAGE_TEST_FILTER_ID_DIRECTIONS = String
+            .format("%s?directionsId=1", TEST_URL);
+    public static final String TEST_URL_PAGE_TEST_FILTER_ALL_PARAMS = String
+            .format("%s?testName=Test 1&directionsId=2", TEST_URL);
 
 
     public static Test createTestWithoutDirections() {
@@ -168,4 +178,82 @@ public class TestTestData {
                 ).build();
     }
 
+    public static Page<Test> createPageOfTests() {
+        return new PageImpl<>(List.of(Test.builder()
+                        .id(1L)
+                        .name("Test 1")
+                        .description("Description 1")
+                        .build(),
+                Test.builder()
+                        .name("Test 2")
+                        .description("Description 2")
+                        .build()));
+    }
+
+    public static TestRequestFilter createEmptyTestFilter() {
+        return TestRequestFilter.builder().build();
+    }
+
+    public static TestRequestFilter createNotEmptyTestFilter() {
+        return TestRequestFilter.builder()
+                .testName("Test 1")
+                .directionsId(List.of(1L)).build();
+    }
+
+    public static List<TestResponseDto> createListOfTestsResponseDto() {
+        return List.of(
+                TestResponseDto.builder()
+                        .name("Test 1")
+                        .description("Description 1")
+                        .build(),
+                TestResponseDto.builder()
+                        .name("Test 2")
+                        .description("Description 2")
+                        .build()
+        );
+    }
+
+    public static List<Test> createListOfTestsWithDirection() {
+        return List.of(Test.builder()
+                        .id(1L)
+                        .name("Test 1")
+                        .description("Description 1")
+                        .directions(
+                                List.of(Direction.builder()
+                                        .name("Direction 1")
+                                        .description("Description 1")
+                                        .build())
+                        )
+                        .build(),
+                Test.builder()
+                        .name("Test 2")
+                        .description("Description 2")
+                        .directions(
+                                List.of(Direction.builder()
+                                        .name("Direction 1")
+                                        .description("Description 1")
+                                        .build())
+                        )
+                        .build());
+    }
+
+    public static List<TestResponseDto> createListOfTestsResponseDtoWithDirections() {
+        return List.of(
+                TestResponseDto.builder()
+                        .name("Test 1")
+                        .description("Description 1")
+                        .directions(
+                                List.of(DirectionResponseDto.builder()
+                                        .name("Direction 1")
+                                        .description("Description 1")
+                                        .build()
+                                )
+                        )
+                        .build(),
+                TestResponseDto.builder()
+                        .name("Test 2")
+                        .description("Description 2")
+                        .build()
+        );
+    }
 }

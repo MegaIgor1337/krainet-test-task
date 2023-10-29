@@ -2,7 +2,6 @@ package org.example.api.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.example.PostgreSQLTestContainerExtension;
 import org.example.persistence.repository.DirectionRepository;
 import org.example.persistence.repository.TestRepository;

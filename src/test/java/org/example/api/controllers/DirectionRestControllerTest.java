@@ -130,7 +130,7 @@ public class DirectionRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPage() throws Exception {
 
-        when(directionService.getDirections(null,  PAGE_SIZE, PAGE_NUMBER))
+        when(directionService.getDirections(null, PAGE_SIZE, PAGE_NUMBER))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(DIRECTION_URL_GET_PAGE)

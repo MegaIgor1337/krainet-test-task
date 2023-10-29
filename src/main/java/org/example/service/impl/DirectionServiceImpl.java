@@ -9,12 +9,14 @@ import org.example.service.DirectionService;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 import org.example.service.mapper.DirectionMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -30,21 +32,22 @@ public class DirectionServiceImpl implements DirectionService {
     public List<DirectionResponseDto> getDirections(String name, Integer pageNumber, Integer pageSize) {
         log.info("Get list of directions on service method with name - {}, page number - {}, page size - {}",
                 name, pageNumber, pageSize);
-        pageSize = pageSize != null ? pageSize : directionRepository.getCountOfDirections();
-        if (name != null && pageSize != 0) {
-            Pageable pageable = PageRequest.of(pageNumber, pageSize);
-            return directionRepository.findAllByName(name, pageable)
-                    .map(directionMapper::fromEntityToResponseDto).getContent();
-        } else if (name == null && pageSize != 0) {
-            Pageable pageable = PageRequest.of(pageNumber, pageSize);
-            return directionRepository.findAll(pageable)
-                    .map(directionMapper::fromEntityToResponseDto).getContent();
-        } else if (name != null) {
-            return directionRepository.findAllByName(name).stream()
-                    .map(directionMapper::fromEntityToResponseDto).toList();
+
+        pageNumber = Optional.ofNullable(pageNumber).orElse(0);
+        pageSize = Optional.ofNullable(pageSize).orElse(directionRepository.getCountOfDirections());
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Direction> directionPage = getPageOfDirections(name, pageable);
+
+        return directionPage.map(directionMapper::fromEntityToResponseDto).getContent();
+    }
+
+    private Page<Direction> getPageOfDirections(String name, Pageable pageable) {
+        if (name != null) {
+            return directionRepository.findAllByName(name, pageable);
         } else {
-            return directionRepository.findAll().stream()
-                    .map(directionMapper::fromEntityToResponseDto).toList();
+            return directionRepository.findAll(pageable);
         }
     }
 

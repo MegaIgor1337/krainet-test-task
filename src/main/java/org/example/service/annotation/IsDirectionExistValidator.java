@@ -9,6 +9,7 @@ import org.example.service.DirectionService;
 @RequiredArgsConstructor
 public class IsDirectionExistValidator implements ConstraintValidator<IsDirectionExist, Long> {
     private final DirectionService directionService;
+
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext constraintValidatorContext) {
         if (id != null && directionService.isDirectionExist(id)) {

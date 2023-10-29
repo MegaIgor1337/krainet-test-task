@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.persistence.entity.Direction;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 

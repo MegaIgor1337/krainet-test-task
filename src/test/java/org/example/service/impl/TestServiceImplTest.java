@@ -3,15 +3,21 @@ package org.example.service.impl;
 import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.dto.TestRequestDto;
+import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
 import org.example.service.mapper.TestMapper;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 import static org.example.util.TestTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,5 +92,47 @@ public class TestServiceImplTest {
         assertEquals(testRequestDto.name(), responseDto.name());
         assertEquals(testRequestDto.description(), responseDto.description());
         assertEquals(testRequestDto.directionsId().size(), responseDto.directions().size());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testGetTestsWithEmptyFilter() {
+        Page<Test> tests = createPageOfTests();
+        List<TestResponseDto> responseDtos = createListOfTestsResponseDto();
+        TestRequestFilter testRequestFilter = createEmptyTestFilter();
+
+        when(testRepository.findAll(PageRequest.of(0, 10))).thenReturn(tests);
+        when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
+                responseDtos.get(0), responseDtos.get(1));
+
+        Integer pageNumber = 0;
+        Integer pageSize = 10;
+
+        List<TestResponseDto> result = testService.getTests(testRequestFilter, pageNumber, pageSize);
+
+        assertEquals(tests.getContent().size(), result.size());
+        assertEquals(tests.getContent().get(0).getName(), result.get(0).name());
+        assertEquals(tests.getContent().get(1).getDescription(), result.get(1).description());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testGetTestsWithNotNullParams() {
+        List<Test> tests = createListOfTestsWithDirection();
+        List<TestResponseDto> responseDtos = createListOfTestsResponseDtoWithDirections();
+        TestRequestFilter testRequestFilter = createNotEmptyTestFilter();
+
+        when(testRepository.findTestsByDirectionIdsAndName(testRequestFilter.directionsId(),
+                testRequestFilter.testName())).thenReturn(tests);
+        when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
+                responseDtos.get(0), responseDtos.get(1));
+
+        Integer pageNumber = 0;
+        Integer pageSize = 10;
+
+        List<TestResponseDto> result = testService.getTests(testRequestFilter, pageNumber, pageSize);
+
+        assertEquals(tests.size(), result.size());
+        assertEquals(tests.get(0).getName(), result.get(0).name());
+        assertEquals(tests.get(1).getDescription(), result.get(1).description());
+        assertEquals(tests.get(0).getDirections().size(), result.get(0).directions().size());
     }
 }

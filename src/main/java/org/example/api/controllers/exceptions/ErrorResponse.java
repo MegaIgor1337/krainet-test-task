@@ -1,4 +1,10 @@
 package org.example.api.controllers.exceptions;
 
-public record ErrorResponse(int statusCode, String message) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public record ErrorResponse(
+        @Schema(description = "Code of the status")
+        int statusCode,
+        @Schema(description = "Message of the error")
+        String message) {
 }
