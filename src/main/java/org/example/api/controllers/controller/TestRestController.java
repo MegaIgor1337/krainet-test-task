@@ -7,12 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.service.TestService;
 import org.example.service.annotation.IsTestExist;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.dto.TestRequestDto;
 import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
@@ -53,13 +53,10 @@ public class TestRestController {
     @GetMapping
     public ResponseEntity<List<TestResponseDto>> get(
             @Valid TestRequestFilter testRequestFilter,
-            @RequestParam(value = "pageNumber", required = false, defaultValue = "0")
-            @Min(value = 0, message = "page number must not be less than 0") Integer pageNumber,
-            @RequestParam(value = "pageSize", required = false)
-            @Min(value = 1, message = "page size must not be less than 1") Integer pageSize
+            @Valid PageRequestDto pageRequestDto
     ) {
         log.info("Getting list of directions");
-        List<TestResponseDto> testsDtos = testService.getTests(testRequestFilter, pageNumber, pageSize);
+        List<TestResponseDto> testsDtos = testService.getTests(testRequestFilter, pageRequestDto);
         return ResponseEntity.ok(testsDtos);
     }
 

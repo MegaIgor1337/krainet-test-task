@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.api.controllers.controller.TestRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.dto.TestRequestDto;
 import org.example.service.dto.TestRequestFilter;
 import org.junit.jupiter.api.Test;
@@ -131,7 +132,7 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithoutParams() throws Exception {
-        when(testService.getTests(null, 0, null))
+        when(testService.getTests(null, new PageRequestDto(0, null)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(TEST_URL)
@@ -144,7 +145,7 @@ public class TestRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithName() throws Exception {
         when(testService.getTests(new TestRequestFilter("Test 1", null),
-                0, null))
+                new PageRequestDto(0, null)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(TEST_URL_PAGE_TEST_FILTER_NAME)
@@ -157,7 +158,7 @@ public class TestRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithDirectionsId() throws Exception {
         when(testService.getTests(new TestRequestFilter(null, List.of(1L)),
-                0, null))
+                new PageRequestDto(0, null)))
                 .thenReturn(new ArrayList<>());
         when(directionService.isDirectionExist(1L)).thenReturn(true);
 
@@ -171,7 +172,7 @@ public class TestRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPageData() throws Exception {
         when(testService.getTests(new TestRequestFilter(null, null),
-                0, 2))
+                new PageRequestDto(0, 2)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(TEST_URL_PAGE_DATA)
@@ -184,7 +185,7 @@ public class TestRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPageSize() throws Exception {
         when(testService.getTests(new TestRequestFilter(null, null),
-                0, 3))
+                new PageRequestDto(0, 3)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(TEST_URL_PAGE_SIZE)

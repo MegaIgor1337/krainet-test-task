@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,7 @@ import org.example.service.DirectionService;
 import org.example.service.annotation.IsDirectionExist;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
+import org.example.service.dto.PageRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,14 +40,13 @@ public class DirectionRestController {
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @GetMapping
     public ResponseEntity<List<DirectionResponseDto>> get(
-            @RequestParam(value = "directionName", required = false) String directionName,
-            @RequestParam(value = "pageNumber", required = false, defaultValue = "0")
-            @Min(value = 0, message = "page number must not be less than 0") Integer pageNumber,
-            @RequestParam(value = "pageSize", required = false)
-            @Min(value = 1, message = "page size must not be less than 0") Integer pageSize
+            @RequestParam(value = "directionNameFilter", required = false)
+            @Schema(name = "Direction name filter", description = "Direction name filter for list of directions")
+            String directionNameFilter,
+            @Valid PageRequestDto pageRequestDto
     ) {
         log.info("Getting list of directions");
-        List<DirectionResponseDto> directionDtos = directionService.getDirections(directionName, pageNumber, pageSize);
+        List<DirectionResponseDto> directionDtos = directionService.getDirections(directionNameFilter, pageRequestDto);
         return ResponseEntity.ok(directionDtos);
     }
 

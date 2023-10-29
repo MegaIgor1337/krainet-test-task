@@ -8,6 +8,7 @@ import org.example.service.annotation.IsDirectionExist;
 import java.util.List;
 
 @Builder
+@Schema(name = "TestFilterDto", description = "Filter for tests")
 public record TestRequestFilter(
         @Schema(defaultValue = "Test", description = "Name of the test for filter")
         String testName,

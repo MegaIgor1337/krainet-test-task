@@ -5,6 +5,7 @@ import org.example.api.controllers.controller.DirectionRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
 import org.example.service.dto.DirectionRequestDto;
+import org.example.service.dto.PageRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -117,7 +118,7 @@ public class DirectionRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithAllParams() throws Exception {
 
-        when(directionService.getDirections(DIRECTION_NAME, PAGE_NUMBER, PAGE_SIZE))
+        when(directionService.getDirections(DIRECTION_NAME, new PageRequestDto(PAGE_NUMBER, PAGE_SIZE)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(DIRECTION_URL_ALL_PARAMS)
@@ -130,7 +131,7 @@ public class DirectionRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPage() throws Exception {
 
-        when(directionService.getDirections(null, PAGE_SIZE, PAGE_NUMBER))
+        when(directionService.getDirections(null, new PageRequestDto(PAGE_SIZE, PAGE_NUMBER)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(DIRECTION_URL_GET_PAGE)
@@ -143,7 +144,7 @@ public class DirectionRestControllerTest {
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithName() throws Exception {
 
-        when(directionService.getDirections(DIRECTION_NAME, 0, null))
+        when(directionService.getDirections(DIRECTION_NAME, new PageRequestDto(0, null)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(DIRECTION_URL_GET_NAME)
@@ -155,7 +156,7 @@ public class DirectionRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithoutParams() throws Exception {
-        when(directionService.getDirections(null, 0, null))
+        when(directionService.getDirections(null, new PageRequestDto(0, null)))
                 .thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(DIRECTION_URL)

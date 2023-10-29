@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.dto.TestRequestDto;
 import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
@@ -104,10 +105,7 @@ public class TestServiceImplTest {
         when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
                 responseDtos.get(0), responseDtos.get(1));
 
-        Integer pageNumber = 0;
-        Integer pageSize = 10;
-
-        List<TestResponseDto> result = testService.getTests(testRequestFilter, pageNumber, pageSize);
+        List<TestResponseDto> result = testService.getTests(testRequestFilter, new PageRequestDto(0, 10));
 
         assertEquals(tests.getContent().size(), result.size());
         assertEquals(tests.getContent().get(0).getName(), result.get(0).name());
@@ -125,10 +123,7 @@ public class TestServiceImplTest {
         when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
                 responseDtos.get(0), responseDtos.get(1));
 
-        Integer pageNumber = 0;
-        Integer pageSize = 10;
-
-        List<TestResponseDto> result = testService.getTests(testRequestFilter, pageNumber, pageSize);
+        List<TestResponseDto> result = testService.getTests(testRequestFilter, new PageRequestDto(0, 10));
 
         assertEquals(tests.size(), result.size());
         assertEquals(tests.get(0).getName(), result.get(0).name());

@@ -8,6 +8,7 @@ import org.example.service.annotation.IsTestExist;
 import org.hibernate.validator.constraints.Length;
 
 @Builder
+@Schema(name = "DirectionRequestDto", description = "Request dto dor direction")
 public record DirectionRequestDto(
         @NotNull(message = "Name of direction must not be null")
         @Length(max = 255, message = "Name is too long, the max number of symbols is 255")

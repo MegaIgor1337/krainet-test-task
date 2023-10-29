@@ -5,6 +5,7 @@ import org.example.persistence.repository.DirectionRepository;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.mapper.DirectionMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -87,7 +88,7 @@ public class DirectionServiceImplTest {
                         expectedDirections.get(1));
 
         List<DirectionResponseDto> directionResponseDtos = directionService
-                .getDirections(DIRECTION_NAME, 0, 2);
+                .getDirections(DIRECTION_NAME, new PageRequestDto(0, 2));
 
         assertEquals(expectedDirections.size(), directionResponseDtos.size());
         assertEquals(expectedDirections.get(0).name(), directionResponseDtos.get(0).name());

@@ -8,15 +8,16 @@ import org.example.persistence.repository.TestRepository;
 import org.example.service.DirectionService;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.mapper.DirectionMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
+import static org.example.service.util.PageUtil.getPageable;
 
 @Slf4j
 @Service
@@ -29,14 +30,12 @@ public class DirectionServiceImpl implements DirectionService {
 
 
     @Override
-    public List<DirectionResponseDto> getDirections(String name, Integer pageNumber, Integer pageSize) {
+    public List<DirectionResponseDto> getDirections(String name, PageRequestDto pageRequestDto) {
+
         log.info("Get list of directions on service method with name - {}, page number - {}, page size - {}",
-                name, pageNumber, pageSize);
+                name, pageRequestDto.pageNumber(), pageRequestDto.pageNumber());
 
-        pageNumber = Optional.ofNullable(pageNumber).orElse(0);
-        pageSize = Optional.ofNullable(pageSize).orElse(directionRepository.getCountOfDirections());
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = getPageable(pageRequestDto, directionRepository.getCountOfDirections());
 
         Page<Direction> directionPage = getPageOfDirections(name, pageable);
 

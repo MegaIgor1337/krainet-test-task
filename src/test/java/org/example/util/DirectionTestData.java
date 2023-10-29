@@ -19,9 +19,9 @@ public class DirectionTestData {
     public static final String DIRECTION_URL_GET_PAGE = String
             .format("%s?pageNumber=%s&pageSize=%s", DIRECTION_URL, PAGE_NUMBER, PAGE_SIZE);
     public static final String DIRECTION_URL_GET_NAME = String
-            .format("%s?directionName=%s", DIRECTION_URL, DIRECTION_NAME);
+            .format("%s?directionNameFilter=%s", DIRECTION_URL, DIRECTION_NAME);
     public static final String DIRECTION_URL_ALL_PARAMS = String
-            .format("%s?directionName=%s&pageNumber=%s&pageSize=%s", DIRECTION_URL,
+            .format("%s?directionNameFilter=%s&pageNumber=%s&pageSize=%s", DIRECTION_URL,
                     DIRECTION_NAME, PAGE_NUMBER, PAGE_SIZE);
     public static final String DIRECTION_URL_POST = String.format("%s/%s", DIRECTION_URL, DIRECTION_ID);
     public static final String DIRECTION_INVALID_ID_URL_POST = String.format("%s/%s", DIRECTION_URL,

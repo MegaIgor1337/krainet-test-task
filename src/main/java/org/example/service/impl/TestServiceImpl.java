@@ -5,19 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.persistence.entity.Test;
 import org.example.persistence.repository.TestRepository;
 import org.example.service.TestService;
+import org.example.service.dto.PageRequestDto;
 import org.example.service.dto.TestRequestDto;
 import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
 import org.example.service.mapper.TestMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
+import static org.example.service.util.PageUtil.getPageable;
 
 @Slf4j
 @Service
@@ -42,14 +43,13 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public List<TestResponseDto> getTests(TestRequestFilter testRequestFilter, Integer pageNumber, Integer pageSize) {
+    public List<TestResponseDto> getTests(TestRequestFilter testRequestFilter, PageRequestDto pageRequestDto) {
+
+
         log.info("Get list of tests on service method with filter - {}, page number - {}, page size - {}",
-                testRequestFilter, pageNumber, pageSize);
+                testRequestFilter, pageRequestDto.pageNumber(), pageRequestDto.pageSize());
 
-        pageNumber = Optional.ofNullable(pageNumber).orElse(0);
-        pageSize = Optional.ofNullable(pageSize).orElse(testRepository.getCountOfDirections());
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = getPageable(pageRequestDto, testRepository.getCountOfDirections());
 
         Page<Test> testPage = getPageOfTests(testRequestFilter, pageable);
 

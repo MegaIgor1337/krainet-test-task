@@ -6,6 +6,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
+@Schema(name = "TestResponseDto", description = "Response dto for test")
 public record TestResponseDto(
         @Schema(description = "name of the test")
         String name,
