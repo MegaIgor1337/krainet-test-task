@@ -1,4 +1,4 @@
-package org.example.api.controllers.controller;
+package org.example.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

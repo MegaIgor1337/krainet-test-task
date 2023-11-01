@@ -29,7 +29,7 @@ public class TestMapperTest {
     @Mock
     private DirectionRepository directionRepository;
     @InjectMocks
-    private final TestMapper testMapper = Mappers.getMapper(TestMapper.class);
+    private TestMapper testMapper;
 
     @org.junit.jupiter.api.Test
     public void shouldMapCorrectlyAllFieldsWhenInvokeFromEntityToDtoWithoutDirections() {
@@ -43,20 +43,14 @@ public class TestMapperTest {
     @org.junit.jupiter.api.Test
     public void shouldMapCorrectlyAllFieldsWhenInvokeFromEntityToDtoWitDirections() {
         Test entity = createTestWithDirections();
-        List<DirectionResponseDto> directionResponseDtos = DirectionTestData
-                .createListOfDirectionResponseDto();
-
-        when(directionMapper.fromEntityToResponseDto(any(Direction.class)))
-                .thenReturn(directionResponseDtos.get(0),
-                        directionResponseDtos.get(1));
 
         TestResponseDto responseDto = testMapper.fromEntityToResponseDto(entity);
 
         assertEquals(entity.getDescription(), responseDto.description());
         assertEquals(entity.getName(), responseDto.name());
-        assertEquals(entity.getDirections().size(), responseDto.directions().size());
-        assertEquals(entity.getDirections().stream().toList().get(0).getName(),
-                responseDto.directions().stream().toList().get(0).name());
+        assertEquals(entity.getDirections().size(), responseDto.directionsId().size());
+        assertEquals(entity.getDirections().stream().toList().get(0).getId(),
+                responseDto.directionsId().stream().toList().get(0));
     }
 
     @org.junit.jupiter.api.Test

@@ -1,0 +1,27 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="17" author="tawerka1337228321@mail.ru">
+        <createTable tableName="candidate_direction">
+            <column name="candidate_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="direction_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="19" author="tawerka1337228321@mail.ru">
+        <addForeignKeyConstraint baseTableName="candidate_direction" baseColumnNames="candidate_id"
+                                 referencedTableName="candidates" referencedColumnNames="id"
+                                 constraintName="fk_candidate_direction_candidate" onDelete="CASCADE" onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="20" author="tawerka1337228321@mail.ru">
+        <addForeignKeyConstraint baseTableName="candidate_direction" baseColumnNames="direction_id"
+                                 referencedTableName="directions" referencedColumnNames="id"
+                                 constraintName="fk_candidate_direction_direction" onDelete="CASCADE" onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

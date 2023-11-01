@@ -73,7 +73,7 @@ public class TestServiceImplTest {
         assertNotNull(responseDto);
         assertEquals(testRequestDto.name(), responseDto.name());
         assertEquals(testRequestDto.description(), responseDto.description());
-        assertEquals(testRequestDto.directionsId().size(), responseDto.directions().size());
+        assertEquals(testRequestDto.directionsId().size(), responseDto.directionsId().size());
     }
 
     @org.junit.jupiter.api.Test
@@ -92,7 +92,7 @@ public class TestServiceImplTest {
         assertNotNull(responseDto);
         assertEquals(testRequestDto.name(), responseDto.name());
         assertEquals(testRequestDto.description(), responseDto.description());
-        assertEquals(testRequestDto.directionsId().size(), responseDto.directions().size());
+        assertEquals(testRequestDto.directionsId().size(), responseDto.directionsId().size());
     }
 
     @org.junit.jupiter.api.Test
@@ -128,6 +128,6 @@ public class TestServiceImplTest {
         assertEquals(tests.size(), result.size());
         assertEquals(tests.get(0).getName(), result.get(0).name());
         assertEquals(tests.get(1).getDescription(), result.get(1).description());
-        assertEquals(tests.get(0).getDirections().size(), result.get(0).directions().size());
+        assertEquals(tests.get(0).getDirections().size(), result.get(0).directionsId().size());
     }
 }

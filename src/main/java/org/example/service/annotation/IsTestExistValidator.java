@@ -3,7 +3,7 @@ package org.example.service.annotation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
-import org.example.api.controllers.exceptions.TestNotFoundException;
+import org.example.api.exceptions.TestNotFoundException;
 import org.example.service.TestService;
 
 @RequiredArgsConstructor

@@ -3,7 +3,7 @@ package org.example.service.annotation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
-import org.example.api.controllers.exceptions.DirectionNotFoundException;
+import org.example.api.exceptions.DirectionNotFoundException;
 import org.example.service.DirectionService;
 
 @RequiredArgsConstructor

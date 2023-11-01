@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet id="16" author="tawerka133722832@mail.ru">
+        <createTable tableName="candidate_test">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="false" />
+            </column>
+            <column name="score" type="INT" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

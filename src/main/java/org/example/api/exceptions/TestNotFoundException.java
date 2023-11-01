@@ -1,4 +1,4 @@
-package org.example.api.controllers.exceptions;
+package org.example.api.exceptions;
 
 public class TestNotFoundException extends RuntimeException {
     public TestNotFoundException(String message) {

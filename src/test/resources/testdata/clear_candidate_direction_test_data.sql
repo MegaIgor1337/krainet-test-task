@@ -1,0 +1,1 @@
+DELETE FROM candidate_direction;

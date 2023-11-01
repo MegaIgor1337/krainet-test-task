@@ -3,7 +3,6 @@ package org.example.util;
 import lombok.experimental.UtilityClass;
 import org.example.persistence.entity.Direction;
 import org.example.persistence.entity.Test;
-import org.example.service.dto.DirectionResponseDto;
 import org.example.service.dto.TestRequestDto;
 import org.example.service.dto.TestRequestFilter;
 import org.example.service.dto.TestResponseDto;
@@ -152,16 +151,10 @@ public class TestTestData {
         return TestResponseDto.builder()
                 .name("Test1")
                 .description("Description1")
-                .directions(
+                .directionsId(
                         List.of(
-                                DirectionResponseDto.builder()
-                                        .name("backend")
-                                        .description("Good")
-                                        .build(),
-                                DirectionResponseDto.builder()
-                                        .name("backend")
-                                        .description("Nice")
-                                        .build()
+                                1L,
+                                2L
                         )
                 ).build();
     }
@@ -242,11 +235,8 @@ public class TestTestData {
                 TestResponseDto.builder()
                         .name("Test 1")
                         .description("Description 1")
-                        .directions(
-                                List.of(DirectionResponseDto.builder()
-                                        .name("Direction 1")
-                                        .description("Description 1")
-                                        .build()
+                        .directionsId(List.of(
+                                        1L
                                 )
                         )
                         .build(),

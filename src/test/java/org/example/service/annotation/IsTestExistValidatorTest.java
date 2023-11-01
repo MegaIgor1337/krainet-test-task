@@ -1,6 +1,6 @@
 package org.example.service.annotation;
 
-import org.example.api.controllers.exceptions.TestNotFoundException;
+import org.example.api.exceptions.TestNotFoundException;
 import org.example.service.impl.TestServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

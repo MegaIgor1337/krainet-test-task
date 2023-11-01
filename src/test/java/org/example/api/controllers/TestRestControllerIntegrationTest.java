@@ -80,7 +80,7 @@ public class TestRestControllerIntegrationTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(testRequestDto.name(), addedTest.name());
         assertEquals(testRequestDto.description(), addedTest.description());
-        assertEquals(testRequestDto.directionsId().size(), addedTest.directions().size());
+        assertEquals(testRequestDto.directionsId().size(), addedTest.directionsId().size());
     }
 
 
@@ -139,7 +139,7 @@ public class TestRestControllerIntegrationTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(testRequestDto.name(), addedTest.name());
         assertEquals(testRequestDto.description(), addedTest.description());
-        assertEquals(testRequestDto.directionsId().size(), addedTest.directions().size());
+        assertEquals(testRequestDto.directionsId().size(), addedTest.directionsId().size());
     }
 
     @Test

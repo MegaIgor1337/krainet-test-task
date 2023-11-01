@@ -1,7 +1,7 @@
 package org.example.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.api.controllers.controller.DirectionRestController;
+import org.example.api.controller.DirectionRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
 import org.example.service.dto.DirectionRequestDto;
@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @WebMvcTest(controllers = DirectionRestController.class)

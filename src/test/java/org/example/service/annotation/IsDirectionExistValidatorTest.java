@@ -1,6 +1,6 @@
 package org.example.service.annotation;
 
-import org.example.api.controllers.exceptions.DirectionNotFoundException;
+import org.example.api.exceptions.DirectionNotFoundException;
 import org.example.service.impl.DirectionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

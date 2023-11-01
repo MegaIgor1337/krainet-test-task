@@ -1,7 +1,7 @@
 package org.example.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.api.controllers.controller.TestRestController;
+import org.example.api.controller.TestRestController;
 import org.example.service.DirectionService;
 import org.example.service.TestService;
 import org.example.service.dto.PageRequestDto;
@@ -37,15 +37,6 @@ public class TestRestControllerTest {
     @MockBean
     private TestService testService;
 
-    @Test
-    void shouldBeStatusIsCreatedWhenCreateTestIsSuccessful() throws Exception {
-        TestRequestDto request = createRequestTestWithoutDirections();
-
-        mockMvc.perform(post(TEST_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated());
-    }
 
     @Test
     public void shouldReturnBadRequestWhenInvalidRequest() throws Exception {

@@ -10,4 +10,15 @@
     <include file="changelogs/db.change-foreign-ket-test-id-directions.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/db.add-delete-cascade-on-test-id-directions.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/db.insert-data-tests.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.add-delete-cascade-delete-in-test-id-in-directions.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.create-table-candidates.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.add-foreign-key-candidate-id-in-directions.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.add-description-in-candidates.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.drop-column-candidate-id-in-directions.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.drop-blob-fields-candidates.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.create-table-file.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.create-table-candidate-test.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.create-table-candidate-direction.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.add-columns-for-image-cv-in-candidate.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/db.add-foreign-keys-in-candidate-test.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

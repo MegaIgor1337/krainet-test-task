@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Set;
 
 @Builder
-@Schema(name = "TestRequestDto", description = "Request dto test")
+@Schema(name = "TestRequestDto", description = "Request dto for test")
 public record TestRequestDto(
         @NotNull(message = "Name of test must not be null")
         @Length(max = 255, message = "Name is too long, the max number of symbols is 255")

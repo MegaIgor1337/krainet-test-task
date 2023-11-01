@@ -1,4 +1,4 @@
-package org.example.api.controllers.exceptions;
+package org.example.api.exceptions;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

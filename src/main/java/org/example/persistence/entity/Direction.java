@@ -14,9 +14,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "directions")
 public class Direction {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     private Test test;

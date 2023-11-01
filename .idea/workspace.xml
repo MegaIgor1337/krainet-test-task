@@ -5,25 +5,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2bbd9299-0f6d-4d40-8bf6-b120ab7a4746" name="Changes" comment="added pageRequestDto">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/PageRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/util/PageUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/CandidateRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/DocumentCvRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/ImageRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/CandidateNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/CvNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/CvStorageException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/EmptyFileException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/ImageNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/ImageStorageException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/WrongMediaTypeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/CandidateTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/File.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/CandidateRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/repository/FileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/CandidateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/CvService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/ImageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/CvValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/ImageValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsCandidateExist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsCandidateExistValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/ValidationCv.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/ValidationImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/CandidateFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/CandidateRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/CandidateResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/FileDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/CandidateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/CvServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/ImageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/CandidateMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/FileMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/util/ValidationConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-columns-for-image-cv-in-candidate.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-delete-cascade-delete-in-test-id-in-directions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-description-in-candidates.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-foreign-key-candidate-id-in-directions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.add-foreign-keys-in-candidate-test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-candidate-direction.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-candidate-test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-candidates.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.create-table-file.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.drop-blob-fields-candidates.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/changelogs/db.drop-column-candidate-id-in-directions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/CandidateRestControllerIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/CandidateRestControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DocumentCvControllerIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DocumentCvControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/ImageRestControllerIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/ImageRestControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/CvValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/ImageValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsCandidateExistValidatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/CandidateServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/CvServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/ImageServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/CandidateMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/FileMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/util/CandidateTestData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/util/FileTestData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/docks/test-pdf-file.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/images/test-image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/add_candidate_direction_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/add_candidate_with_image_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/add_candidates_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/add_image_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/clear_candidate_direction_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/clear_candidates_test_data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testdata/clear_file_test_data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/TestRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/TestRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/DirectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/TestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/DirectionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/DirectionRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/controller/TestRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/controller/TestRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/DirectionNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/DirectionNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/ErrorResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/exceptions/TestNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/exceptions/TestNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/controllers/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Candidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Candidate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/persistence/entity/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsDirectionExistValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsDirectionExistValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsTestExistValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/annotation/IsTestExistValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/DirectionResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestRequestFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/dto/TestResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TestServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/TestServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/TestMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/mapper/TestMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/DirectionRestControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/TestRestControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/TestRestControllerIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/TestRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/api/controllers/TestRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/DirectionServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/DirectionServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsDirectionExistValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsDirectionExistValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsTestExistValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/annotation/IsTestExistValidatorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TestServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/impl/TestServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/util/DirectionTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/util/DirectionTestData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/TestMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/mapper/TestMapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/util/TestTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/util/TestTestData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +112,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Class" />
         <option value="Interface" />
         <option value="AnnotationType" />
         <option value="Class" />
@@ -73,7 +153,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/JAVA/krainet-test-task&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JAVA/bootcamp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -92,12 +172,16 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\JAVA\krainet-test-task\src\test\resources\docks" />
+      <recent name="D:\JAVA\krainet-test-task\src\test\resources\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\JAVA\krainet-test-task\src\test\java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DirectionRestControllerIntegrationTest.shouldReturnOkWhenAllParamsAreExist">
-    <configuration name="DirectionRestControllerIntegrationTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ImageRestControllerIntegrationTest">
+    <configuration name="CandidateRestControllerIntegrationTest.shouldReturnIsCreateWithDirectionsId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
@@ -106,44 +190,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="krainet-test-task" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.api.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.api" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.DirectionRestControllerIntegrationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithoutTestId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="krainet-test-task" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.api.controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnIsCreatedWithoutTestId" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.CandidateRestControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="shouldReturnIsCreateWithDirectionsId" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnOkWhenAllParamsAreExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ImageRestControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
@@ -152,14 +206,29 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnOkWhenAllParamsAreExist" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.ImageRestControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImageRestControllerIntegrationTest.shouldReturnFileDtoWhenUploadSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.ImageRestControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="shouldReturnFileDtoWhenUploadSuccess" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DirectionRestControllerIntegrationTest.shouldReturnOkWhenGetWithPageRequestData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ImageRestControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="krainet-test-task" />
       <extension name="coverage">
         <pattern>
@@ -168,8 +237,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.api.controllers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.DirectionRestControllerIntegrationTest" />
-      <option name="METHOD_NAME" value="shouldReturnOkWhenGetWithPageRequestData" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.ImageRestControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImageRestControllerTest.shouldBeStatusIsOkWhenDownloadImage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="krainet-test-task" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.api.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.api.controllers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.api.controllers.ImageRestControllerTest" />
+      <option name="METHOD_NAME" value="shouldBeStatusIsOkWhenDownloadImage" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -190,11 +274,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnOkWhenAllParamsAreExist" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest (1)" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnOkWhenGetWithPageRequestData" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest.shouldReturnIsCreatedWithoutTestId" />
-        <item itemvalue="JUnit.DirectionRestControllerIntegrationTest" />
+        <item itemvalue="JUnit.ImageRestControllerIntegrationTest" />
+        <item itemvalue="JUnit.ImageRestControllerIntegrationTest.shouldReturnFileDtoWhenUploadSuccess" />
+        <item itemvalue="JUnit.CandidateRestControllerIntegrationTest.shouldReturnIsCreateWithDirectionsId" />
+        <item itemvalue="JUnit.ImageRestControllerTest" />
+        <item itemvalue="JUnit.ImageRestControllerTest.shouldBeStatusIsOkWhenDownloadImage" />
       </list>
     </recent_temporary>
   </component>
@@ -217,7 +301,14 @@
       <workItem from="1698412788817" duration="32362000" />
       <workItem from="1698478671026" duration="18396000" />
       <workItem from="1698518245349" duration="21403000" />
-      <workItem from="1698606480827" duration="7574000" />
+      <workItem from="1698606480827" duration="17885000" />
+      <workItem from="1698661273027" duration="291000" />
+      <workItem from="1698661622279" duration="5072000" />
+      <workItem from="1698667228194" duration="35008000" />
+      <workItem from="1698738998638" duration="1500000" />
+      <workItem from="1698747942547" duration="5036000" />
+      <workItem from="1698765124111" duration="11292000" />
+      <workItem from="1698826175358" duration="10668000" />
     </task>
     <task id="LOCAL-00001" summary="added dependencies">
       <created>1698186064965</created>
@@ -275,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698541056723</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added pageRequestDto">
+      <created>1698616306407</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1698616306407</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,7 +407,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/service/mapper/TestMapper.java</url>
-          <line>27</line>
+          <line>45</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -336,6 +434,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/service/impl/DirectionServiceImpl.java</url>
           <line>45</line>
           <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/mapper/DirectionMapper.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="67" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -9,6 +9,10 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
+  servlet:
+    multipart:
+      file-size-threshold: 2048
+      max-file-size: 5MB
 logging:
   level:
     org.org.example: info

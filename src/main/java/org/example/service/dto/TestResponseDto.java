@@ -8,11 +8,13 @@ import java.util.List;
 @Builder
 @Schema(name = "TestResponseDto", description = "Response dto for test")
 public record TestResponseDto(
-        @Schema(description = "name of the test")
+        @Schema(name = "Id", description = "Id of the test")
+        Long id,
+        @Schema(name = "Name", description = "Name of the test")
         String name,
-        @Schema(description = "description of the test")
+        @Schema(name = "Description", description = "Description of the test")
         String description,
-        @Schema(description = "directions of the test")
-        List<DirectionResponseDto> directions
+        @Schema(name = "Directions", description = "Directions of the test")
+        List<Long> directionsId
 ) {
 }

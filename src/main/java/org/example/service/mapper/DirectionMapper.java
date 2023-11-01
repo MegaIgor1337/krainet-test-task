@@ -2,7 +2,6 @@ package org.example.service.mapper;
 
 import org.example.persistence.entity.Direction;
 import org.example.persistence.repository.TestRepository;
-import org.example.service.TestService;
 import org.example.service.dto.DirectionRequestDto;
 import org.example.service.dto.DirectionResponseDto;
 import org.mapstruct.Mapper;

@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Builder
-@Schema(name = "DirectionResponseDto", description = "Response dto dor direction")
+@Schema(name = "DirectionResponseDto", description = "Response dto for direction")
 public record DirectionResponseDto(
-        @Schema(description = "Name of the IT direction")
+        @Schema(name = "Id", description = "Id of the direction")
+        Long id,
+        @Schema(name = "Name", description = "Name of the IT direction")
         String name,
-        @Schema(description = "Description of the IT direction")
+        @Schema(name = "Description", description = "Description of the IT direction")
         String description) {
 }

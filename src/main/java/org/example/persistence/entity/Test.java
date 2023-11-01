@@ -14,9 +14,12 @@ import java.util.List;
 @Table(name = "tests")
 public class Test {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
     @ToString.Exclude
     @JoinColumn(name = "test_id")
