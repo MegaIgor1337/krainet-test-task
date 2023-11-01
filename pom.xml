@@ -126,7 +126,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>org.example.ApplicationRunner</mainClass>
+                    <mainClass>krainet.test.ApplicationRunner</mainClass>
                 </configuration>
                 <executions>
                     <execution>
