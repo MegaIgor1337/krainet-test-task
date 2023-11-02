@@ -1,16 +1,24 @@
 package krainet.test.service.impl;
 
+import krainet.test.persistence.entity.Test;
 import krainet.test.service.CandidateService;
-import krainet.test.service.dto.CandidateRequestDto;
-import krainet.test.service.dto.CandidateResponseDto;
+import krainet.test.service.dto.*;
+import krainet.test.service.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import krainet.test.persistence.entity.Candidate;
 import krainet.test.persistence.repository.CandidateRepository;
 import krainet.test.service.mapper.CandidateMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static krainet.test.service.util.PageUtil.getPageable;
 
 @Slf4j
 @Service
@@ -28,9 +36,19 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public List<CandidateResponseDto> getCandidates() {
-        return candidateRepository.findAll().stream()
-                .map(candidateMapper::fromEntityToResponseDto).toList();
+    public List<CandidateResponseDto> getCandidates(List<SortCandidateFields> sortCandidateFields,
+                                                    Sort.Direction direction, CandidateFilter candidateFilter,
+                                                    PageRequestDto pageRequestDto) {
+        log.info("Get list of tests on service method with filter - {}, pageable - {}",
+                candidateFilter, pageRequestDto);
+
+        Sort sort = getSort(sortCandidateFields, direction);
+        Specification<Candidate> specification = getSpecifications(candidateFilter);
+        Pageable pageable = getPageable(pageRequestDto, candidateRepository.getCountOfDirections(), sort);
+
+        Page<Candidate> candidatePage = candidateRepository.findAll(specification, pageable);
+
+        return candidatePage.map(candidateMapper::fromEntityToResponseDto).getContent();
     }
 
     @Override
@@ -45,6 +63,33 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate updatedCandidate = candidateRepository.save(candidate);
         log.info("updated candidate {} with id - {}", updatedCandidate, id);
         return candidateMapper.fromEntityToResponseDto(updatedCandidate);
+    }
+
+    private Specification<Candidate> getSpecifications(CandidateFilter candidateFilter) {
+        Specification<Candidate> specification = Specification.where(null);
+        if (candidateFilter.firstName() != null && !candidateFilter.firstName().isBlank()) {
+            specification = specification.and((root, query, cb) ->
+                    cb.equal(root.get("firstName"), candidateFilter.firstName()));
+        }
+        if (candidateFilter.lastName() != null && !candidateFilter.lastName().isBlank()) {
+            specification = specification.and((root, query, cb) ->
+                    cb.equal(root.get("lastName"), candidateFilter.lastName()));
+        }
+        if (candidateFilter.directionsId() != null && !candidateFilter.directionsId().isEmpty()) {
+            specification = specification.and((root, query, cb) ->
+                    root.join("directions").get("id").in(candidateFilter.directionsId()));
+        }
+        return specification;
+    }
+
+    private Sort getSort(List<SortCandidateFields> sortCandidateFields, Sort.Direction direction) {
+        List<Sort.Order> orders = new ArrayList<>();
+        if (sortCandidateFields != null && !sortCandidateFields.isEmpty()) {
+            for (SortCandidateFields sortField : sortCandidateFields) {
+                orders.add(new Sort.Order(direction, sortField.getEntityFieldName()));
+            }
+        }
+        return Sort.by(orders);
     }
 }
 

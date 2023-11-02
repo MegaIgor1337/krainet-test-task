@@ -13,10 +13,14 @@ import krainet.test.service.dto.PageRequestDto;
 import krainet.test.service.mapper.DirectionMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+//import static krainet.test.persistence.entity.QDirection.direction;
 
 import java.util.List;
+
+import static krainet.test.service.util.PageUtil.getPageable;
 
 @Slf4j
 @Service
@@ -34,20 +38,15 @@ public class DirectionServiceImpl implements DirectionService {
         log.info("Get list of directions on service method with name - {}, page number - {}, page size - {}",
                 name, pageRequestDto.pageNumber(), pageRequestDto.pageNumber());
 
-        Pageable pageable = PageUtil.getPageable(pageRequestDto, directionRepository.getCountOfDirections());
+        Pageable pageable = getPageable(pageRequestDto, directionRepository.getCountOfDirections(), null);
+        Specification<Direction> directionSpecification = getSpecifications(name);
 
-        Page<Direction> directionPage = getPageOfDirections(name, pageable);
+        Page<Direction> directionPage = directionRepository.findAll(directionSpecification, pageable);
 
         return directionPage.map(directionMapper::fromEntityToResponseDto).getContent();
     }
 
-    private Page<Direction> getPageOfDirections(String name, Pageable pageable) {
-        if (name != null) {
-            return directionRepository.findAllByName(name, pageable);
-        } else {
-            return directionRepository.findAll(pageable);
-        }
-    }
+
 
     @Override
     @Transactional
@@ -74,4 +73,14 @@ public class DirectionServiceImpl implements DirectionService {
     public boolean isDirectionExist(Long id) {
         return directionRepository.existsById(id);
     }
+
+    private Specification<Direction> getSpecifications(String name) {
+        Specification<Direction> specification = Specification.where(null);
+        if (name != null && !name.isBlank()) {
+            specification = specification.and(((root, query, cb) ->
+                    cb.equal(root.get("name"), name)));
+        }
+        return specification;
+    }
+
 }

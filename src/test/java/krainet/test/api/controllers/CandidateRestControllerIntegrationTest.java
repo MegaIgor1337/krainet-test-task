@@ -1,5 +1,7 @@
 package krainet.test.api.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import krainet.test.service.dto.CandidateResponseDto;
 import krainet.test.util.CandidateTestData;
 import krainet.test.PostgreSQLTestContainerExtension;
@@ -10,16 +12,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
+import java.io.IOException;
+import java.util.List;
+
+import static krainet.test.util.CandidateTestData.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SqlGroup({
@@ -35,6 +42,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 public class CandidateRestControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void shouldReturnIsCreateWithDirectionsId() {
@@ -162,4 +171,105 @@ public class CandidateRestControllerIntegrationTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @Test
+    public void shouldReturnOkWhenGetWithPageRequestData() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                CANDIDATE_URL_GET_PAGE,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CandidateResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        System.out.println(responseBody);
+
+        assertEquals(2, responseBody.size());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenParamsAreNotExist() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                CANDIDATE_URL,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CandidateResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertEquals(5, responseBody.size());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenFilterByName() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                CANDIDATE_URL_GET_NAME,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CandidateResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+
+        assertEquals(CANDIDATE_NAME, responseBody.get(0).firstName());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenAllParamsAreExist() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                CANDIDATE_URL_FILTER_AND_PAGE,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CandidateResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+        assertNotNull(responseBody);
+
+        assertEquals(CANDIDATE_NAME, responseBody.get(0).firstName());
+        assertEquals(CANDIDATE_LAST_NAME, responseBody.get(0).lastName());
+        assertEquals(OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnOkWhenSorting() throws IOException {
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                CANDIDATE_URL_GET_SORTING,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CandidateResponseDto> responseBody = objectMapper
+                .readValue(response.getBody(), new TypeReference<>() {
+                });
+        assertNotNull(responseBody);
+
+        assertEquals(SORTED_CANDIDATE_NAME, responseBody.get(0).firstName());
+        assertEquals(OK, response.getStatusCode());
+    }
+
 }

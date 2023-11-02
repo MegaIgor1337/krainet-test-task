@@ -40,13 +40,14 @@ public class DirectionRestController {
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @GetMapping
     public ResponseEntity<List<DirectionResponseDto>> get(
-            @RequestParam(value = "directionNameFilter", required = false)
-            @Schema(name = "Direction name filter", description = "Direction name filter for list of directions")
-            String directionNameFilter,
+            @RequestParam(value = "name", required = false)
+            @Schema(description = "Direction name filter for list of directions")
+            String name,
             @Valid PageRequestDto pageRequestDto
     ) {
         log.info("Getting list of directions");
-        List<DirectionResponseDto> directionDtos = directionService.getDirections(directionNameFilter, pageRequestDto);
+        List<DirectionResponseDto> directionDtos = directionService
+                .getDirections(name, pageRequestDto);
         return ResponseEntity.ok(directionDtos);
     }
 

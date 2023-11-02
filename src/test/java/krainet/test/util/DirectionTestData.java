@@ -5,6 +5,7 @@ import krainet.test.persistence.entity.Test;
 import krainet.test.service.dto.DirectionRequestDto;
 import krainet.test.service.dto.DirectionResponseDto;
 import lombok.experimental.UtilityClass;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class DirectionTestData {
     public static final String DIRECTION_URL_GET_PAGE = String
             .format("%s?pageNumber=%s&pageSize=%s", DIRECTION_URL, PAGE_NUMBER, PAGE_SIZE);
     public static final String DIRECTION_URL_GET_NAME = String
-            .format("%s?directionNameFilter=%s", DIRECTION_URL, DIRECTION_NAME);
+            .format("%s?name=%s", DIRECTION_URL, DIRECTION_NAME);
     public static final String DIRECTION_URL_ALL_PARAMS = String
-            .format("%s?directionNameFilter=%s&pageNumber=%s&pageSize=%s", DIRECTION_URL,
+            .format("%s?name=%s&pageNumber=%s&pageSize=%s", DIRECTION_URL,
                     DIRECTION_NAME, PAGE_NUMBER, PAGE_SIZE);
     public static final String DIRECTION_URL_POST = String.format("%s/%s", DIRECTION_URL, DIRECTION_ID);
     public static final String DIRECTION_INVALID_ID_URL_POST = String.format("%s/%s", DIRECTION_URL,
@@ -161,4 +162,6 @@ public class DirectionTestData {
                         .build()
         );
     }
+
+
 }

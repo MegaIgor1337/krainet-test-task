@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -81,8 +83,9 @@ public class DirectionServiceImplTest {
         List<DirectionResponseDto> expectedDirections = createListOfDirectionResponseDto();
         List<Direction> directions = createListOfDirections();
 
-        when(directionRepository.findAllByName(DIRECTION_NAME, PageRequest.of(0, 2)))
+        when(directionRepository.findAll(any(Specification.class), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(directions));
+
         when(directionMapper.fromEntityToResponseDto(any(Direction.class)))
                 .thenReturn(expectedDirections.get(0),
                         expectedDirections.get(1));

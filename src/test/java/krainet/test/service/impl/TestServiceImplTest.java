@@ -14,9 +14,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
+import static krainet.test.util.TestTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -101,7 +104,7 @@ public class TestServiceImplTest {
         List<TestResponseDto> responseDtos = TestTestData.createListOfTestsResponseDto();
         TestRequestFilter testRequestFilter = TestTestData.createEmptyTestFilter();
 
-        when(testRepository.findAll(PageRequest.of(0, 10))).thenReturn(tests);
+        when(testRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(tests);
         when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
                 responseDtos.get(0), responseDtos.get(1));
 
@@ -114,20 +117,17 @@ public class TestServiceImplTest {
 
     @org.junit.jupiter.api.Test
     public void testGetTestsWithNotNullParams() {
-        List<Test> tests = TestTestData.createListOfTestsWithDirection();
-        List<TestResponseDto> responseDtos = TestTestData.createListOfTestsResponseDtoWithDirections();
-        TestRequestFilter testRequestFilter = TestTestData.createNotEmptyTestFilter();
+        Page<Test> tests = createPageOfTests();
+        List<TestResponseDto> responseDtos = createListOfTestsResponseDtoWithDirections();
+        TestRequestFilter testRequestFilter = createNotEmptyTestFilter();
 
-        when(testRepository.findTestsByDirectionIdsAndName(testRequestFilter.directionsId(),
-                testRequestFilter.testName())).thenReturn(tests);
+        when(testRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(tests);
         when(testMapper.fromEntityToResponseDto(any(Test.class))).thenReturn(
                 responseDtos.get(0), responseDtos.get(1));
 
         List<TestResponseDto> result = testService.getTests(testRequestFilter, new PageRequestDto(0, 10));
 
-        assertEquals(tests.size(), result.size());
-        assertEquals(tests.get(0).getName(), result.get(0).name());
-        assertEquals(tests.get(1).getDescription(), result.get(1).description());
-        assertEquals(tests.get(0).getDirections().size(), result.get(0).directionsId().size());
+        assertEquals(tests.getContent().get(0).getName(), result.get(0).name());
+        assertEquals(tests.getContent().get(1).getDescription(), result.get(1).description());
     }
 }

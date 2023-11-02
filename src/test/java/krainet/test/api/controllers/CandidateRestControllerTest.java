@@ -1,11 +1,12 @@
 package krainet.test.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import krainet.test.util.CandidateTestData;
 import krainet.test.api.controller.CandidateRestController;
 import krainet.test.service.CandidateService;
 import krainet.test.service.DirectionService;
 import krainet.test.service.dto.CandidateRequestDto;
+import krainet.test.service.dto.PageRequestDto;
+import krainet.test.util.CandidateTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,10 +16,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+
+import static krainet.test.util.CandidateTestData.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = CandidateRestController.class)
@@ -37,7 +41,7 @@ public class CandidateRestControllerTest {
     void shouldBeStatusIsCreatedWhenCreateCandidateWithoutIDirectionsIsSuccessful() throws Exception {
         CandidateRequestDto request = CandidateTestData.createRequestDtoWithoutDirectionsId();
 
-        mockMvc.perform(MockMvcRequestBuilders.post(CandidateTestData.CANDIDATE_URL)
+        mockMvc.perform(MockMvcRequestBuilders.post(CANDIDATE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -47,7 +51,7 @@ public class CandidateRestControllerTest {
     public void shouldReturnBadRequestWhenInvalidJsonRequest() throws Exception {
         String invalidRequestBody = CandidateTestData.getInvalidJson();
 
-        mockMvc.perform(MockMvcRequestBuilders.post(CandidateTestData.CANDIDATE_URL)
+        mockMvc.perform(MockMvcRequestBuilders.post(CANDIDATE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidRequestBody))
                 .andExpect(status().isBadRequest());
@@ -92,4 +96,54 @@ public class CandidateRestControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithoutParams() throws Exception {
+
+        mockMvc.perform(get(CANDIDATE_URL)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithPages() throws Exception {
+
+        mockMvc.perform(get(CANDIDATE_URL_GET_PAGE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithSort() throws Exception {
+
+        mockMvc.perform(get(CANDIDATE_URL_GET_SORTING)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsSuccessfulWithFilter() throws Exception {
+
+        mockMvc.perform(get(CANDIDATE_URL_FILTER_AND_PAGE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void shouldReturnOkWhenGetIsAllParams() throws Exception {
+
+        mockMvc.perform(get(CANDIDATE_URL_ALL_PARAMS)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
 }

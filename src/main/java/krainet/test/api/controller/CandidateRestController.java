@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import krainet.test.service.CandidateService;
 import krainet.test.service.annotation.IsCandidateExist;
-import krainet.test.service.dto.CandidateRequestDto;
-import krainet.test.service.dto.CandidateResponseDto;
+import krainet.test.service.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +51,15 @@ public class CandidateRestController {
             content = @Content(mediaType = APPLICATION_JSON_VALUE,
                     array = @ArraySchema(schema = @Schema(implementation = CandidateResponseDto.class))))
     @GetMapping
-    public ResponseEntity<List<CandidateResponseDto>> get() {
+    public ResponseEntity<List<CandidateResponseDto>> get(
+            @RequestParam(name = "sort", required = false) List<SortCandidateFields> sortFields,
+            @RequestParam(name = "order", required = false, defaultValue = "ASC") Sort.Direction order,
+            @Valid CandidateFilter candidateFilter,
+            @Valid PageRequestDto pageRequestDto
+    ) {
         log.info("Getting list of directions");
-        List<CandidateResponseDto> directionDtos = candidateService.getCandidates();
+        List<CandidateResponseDto> directionDtos = candidateService.getCandidates(sortFields, order,
+                candidateFilter, pageRequestDto);
         return ResponseEntity.ok(directionDtos);
     }
 

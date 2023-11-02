@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Slf4j
@@ -54,14 +55,13 @@ public class DocumentCvRestController {
 
     @Operation(summary = "Ger cv document of candidate")
     @ApiResponse(responseCode = "200", description = "GET",
-            content = @Content(
-                    array = @ArraySchema(schema = @Schema(implementation = byte[].class))))
-    @GetMapping(produces = MULTIPART_FORM_DATA_VALUE)
+            content = @Content(mediaType = "application/pdf"))
+    @GetMapping(produces = APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> get(
             @IsCandidateExist
             @PathVariable("id") Long id) {
         log.info("Get image of candidate with id - {}", id);
-        byte[] image = cvService.getCv(id);
-        return new ResponseEntity<>(image, OK);
+        byte[] cv = cvService.getCv(id);
+        return new ResponseEntity<>(cv, OK);
     }
 }

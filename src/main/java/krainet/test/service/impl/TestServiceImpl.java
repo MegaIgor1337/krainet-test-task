@@ -14,6 +14,7 @@ import krainet.test.service.mapper.TestMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,32 +44,15 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<TestResponseDto> getTests(TestRequestFilter testRequestFilter, PageRequestDto pageRequestDto) {
+        log.info("Get list of tests on service method with filter - {}, pageRequestDto - {}",
+                testRequestFilter, pageRequestDto);
 
+        Pageable pageable = PageUtil.getPageable(pageRequestDto, testRepository.getCountOfDirections(), null);
+        Specification<Test> specification = getSpecifications(testRequestFilter);
 
-        log.info("Get list of tests on service method with filter - {}, page number - {}, page size - {}",
-                testRequestFilter, pageRequestDto.pageNumber(), pageRequestDto.pageSize());
-
-        Pageable pageable = PageUtil.getPageable(pageRequestDto, testRepository.getCountOfDirections());
-
-        Page<Test> testPage = getPageOfTests(testRequestFilter, pageable);
+        Page<Test> testPage = testRepository.findAll(specification, pageable);
 
         return testPage.map(testMapper::fromEntityToResponseDto).getContent();
-    }
-
-    private Page<Test> getPageOfTests(TestRequestFilter testRequestFilter, Pageable pageable) {
-        String name = testRequestFilter.testName();
-        List<Long> directionsId = testRequestFilter.directionsId();
-        if (name != null && !name.isBlank() && directionsId != null && !directionsId.isEmpty()) {
-            List<Test> filterTests = testRepository.findTestsByDirectionIdsAndName(directionsId, name);
-            return new PageImpl<>(filterTests, pageable, filterTests.size());
-        } else if (name != null && !name.isBlank()) {
-            return testRepository.findAllByName(name, pageable);
-        } else if (directionsId != null && !directionsId.isEmpty()) {
-            List<Test> filterTests = testRepository.findTestsByDirectionIds(directionsId);
-            return new PageImpl<>(filterTests, pageable, filterTests.size());
-        } else {
-            return testRepository.findAll(pageable);
-        }
     }
 
 
@@ -80,5 +64,18 @@ public class TestServiceImpl implements TestService {
         Test updatedTest = testRepository.save(requestTest);
         log.info("Updated test - {}", updatedTest);
         return testMapper.fromEntityToResponseDto(updatedTest);
+    }
+
+    private Specification<Test> getSpecifications(TestRequestFilter testRequestFilter) {
+        Specification<Test> specification = Specification.where(null);
+        if (testRequestFilter.testName() != null && !testRequestFilter.testName().isBlank()) {
+            specification = specification.and((root, query, cb) ->
+                    cb.equal(root.get("name"), testRequestFilter.testName()));
+        }
+        if (testRequestFilter.directionsId() != null && !testRequestFilter.directionsId().isEmpty()) {
+            specification = specification.and((root, query, cb) ->
+                    root.join("directions").get("id").in(testRequestFilter.directionsId()));
+        }
+        return specification;
     }
 }
