@@ -15,4 +15,4 @@ spring:
       max-file-size: 5MB
 logging:
   level:
-    org.org.example: info
+    krainet.test: info

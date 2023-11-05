@@ -32,8 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class TestResultRestController {
     private final TestResultService testResultService;
 
-
-    @Operation(summary = "Get list of test results from DB")
+    @Operation(summary = "Get list of the test results from DB")
     @ApiResponse(responseCode = "200", description = "GET",
             content = @Content(mediaType = APPLICATION_JSON_VALUE,
                     array = @ArraySchema(schema = @Schema(implementation = TestResultResponseDto.class))))
@@ -46,7 +45,7 @@ public class TestResultRestController {
             @Valid TestResultRequestFilter filter,
             @Valid PageRequestDto page
     ) {
-        log.info("Getting list of test results");
+        log.info("Getting list of the test results");
         List<TestResultResponseDto> testResultResponseDtos = testResultService.getTestResult(sortFields, order,
                 filter, page);
         return ResponseEntity.ok(testResultResponseDtos);

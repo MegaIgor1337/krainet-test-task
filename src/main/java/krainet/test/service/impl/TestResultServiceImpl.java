@@ -33,7 +33,7 @@ public class TestResultServiceImpl implements TestResultService {
     public TestResultResponseDto saveTestResult(TestResultRequestDto testResultRequestDto) {
         TestResult testResult = testResultMapper.fromRequestDtoToEntity(testResultRequestDto);
         TestResult savedTestResult = testResultRepository.save(testResult);
-        log.info("saved test result - {}", testResult);
+        log.info("Saved test result - {}", testResult);
         return testResultMapper.fromEntityToResponseDto(savedTestResult);
     }
 
@@ -43,7 +43,7 @@ public class TestResultServiceImpl implements TestResultService {
         TestResult testResult = testResultMapper.fromRequestDtoToEntity(testResultRequestDto);
         testResult.setId(id);
         TestResult updatedTestResult = testResultRepository.save(testResult);
-        log.info("updated test result - {}", updatedTestResult);
+        log.info("Updated test result - {}", updatedTestResult);
         return testResultMapper.fromEntityToResponseDto(updatedTestResult);
     }
 
@@ -57,7 +57,7 @@ public class TestResultServiceImpl implements TestResultService {
                                                      Sort.Direction order,
                                                      TestResultRequestFilter testResultRequestFilter,
                                                      PageRequestDto pageRequestDto) {
-        log.info("get list of tests result in service method with filter - {}, pageable - {}," +
+        log.info("Get list of tests result in service method with filter - {}, pageable - {}," +
                  " sort - {}, order - {}", testResultRequestFilter, pageRequestDto,
                 testResultRequestFilter, order);
 

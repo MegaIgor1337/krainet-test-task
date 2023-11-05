@@ -47,7 +47,7 @@ public class TestRestController {
     }
 
 
-    @Operation(summary = "Get list of tests from DB by Name, directions page number and size if the page")
+    @Operation(summary = "Get list of tests from DB by Name, tests page number and size if the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = TestResponseDto.class))))
     @GetMapping(produces = APPLICATION_JSON_VALUE)
@@ -55,7 +55,7 @@ public class TestRestController {
             @Valid TestRequestFilter testRequestFilter,
             @Valid PageRequestDto pageRequestDto
     ) {
-        log.info("Getting list of directions");
+        log.info("Getting list of the tests");
         List<TestResponseDto> testsDtos = testService.getTests(testRequestFilter, pageRequestDto);
         return ResponseEntity.ok(testsDtos);
     }

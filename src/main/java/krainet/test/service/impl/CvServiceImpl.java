@@ -50,7 +50,7 @@ public class CvServiceImpl implements CvService {
 
     @Override
     public byte[] getCv(Long id) {
-        log.info("get cv of the candidate with id - {}", id);
+        log.info("Get cv of the candidate with id - {}", id);
         Candidate candidate = candidateRepository.findById(id).get();
         if (candidate.getCv() != null) {
             return candidate.getCv().getContent();

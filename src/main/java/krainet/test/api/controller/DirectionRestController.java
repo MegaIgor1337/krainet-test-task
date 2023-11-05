@@ -33,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class DirectionRestController {
     private final DirectionService directionService;
 
-    @Operation(summary = "Get list of directions from DB by Name, page number and size if the page")
+    @Operation(summary = "Get list of directions from DB by Name, page number and size of the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @GetMapping(produces = APPLICATION_JSON_VALUE)
@@ -55,7 +55,7 @@ public class DirectionRestController {
     @PostMapping
     public ResponseEntity<DirectionResponseDto> add(
             @RequestBody
-            @Valid
+            @Valid @NotNull
             DirectionRequestDto directionRequestDto) {
         log.info("Adding new direction with the name - {} and description - {}",
                 directionRequestDto.name(), directionRequestDto.description());
@@ -68,7 +68,7 @@ public class DirectionRestController {
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @PutMapping("/{id}")
     public ResponseEntity<DirectionResponseDto> update(
-            @RequestBody @Valid
+            @RequestBody @Valid @NotNull
             DirectionRequestDto directionRequestDto,
             @PathVariable(name = "id")
             @IsDirectionExist @NotNull Long id) {

@@ -32,7 +32,7 @@ public class CandidateServiceImpl implements CandidateService {
     public CandidateResponseDto saveCandidate(CandidateRequestDto candidateRequestDto) {
         Candidate candidate = candidateMapper.fromRequestDtoToEntity(candidateRequestDto);
         Candidate savedCandidate = candidateRepository.save(candidate);
-        log.info("saved candidate - {}", savedCandidate);
+        log.info("Saved candidate - {}", savedCandidate);
         return candidateMapper.fromEntityToResponseDto(candidate);
     }
 
@@ -40,7 +40,7 @@ public class CandidateServiceImpl implements CandidateService {
     public List<CandidateResponseDto> getCandidates(List<SortCandidateFields> sortCandidateFields,
                                                     Sort.Direction direction, CandidateRequestFilter candidateFilter,
                                                     PageRequestDto pageRequestDto) {
-        log.info("get list of tests on service method with filter - {}, pageable - {}",
+        log.info("Get list of tests on service method with filter - {}, pageable - {}",
                 candidateFilter, pageRequestDto);
 
         Sort sort = getSort(sortCandidateFields, direction);
@@ -63,7 +63,7 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate = candidateMapper.fromRequestDtoToEntity(candidateRequestDto);
         candidate.setId(id);
         Candidate updatedCandidate = candidateRepository.save(candidate);
-        log.info("updated candidate {} with id - {}", updatedCandidate, id);
+        log.info("Updated candidate {} with id - {}", updatedCandidate, id);
         return candidateMapper.fromEntityToResponseDto(updatedCandidate);
     }
 

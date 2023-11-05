@@ -35,13 +35,13 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 public class DocumentCvRestController {
     private final CvService cvService;
 
-    @Operation(summary = "Put document cv of candidate")
+    @Operation(summary = "Put document cv of the candidate")
     @ApiResponse(responseCode = "201", description = "CREATE",
             content = @Content(
                     array = @ArraySchema(schema = @Schema(implementation = FileDto.class))))
     @PutMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<FileDto> add(
-            @IsCandidateExist
+            @IsCandidateExist @NotNull
             @PathVariable("id") Long id,
             @ValidationCv @NotNull
             @RequestPart("cv")
@@ -55,12 +55,12 @@ public class DocumentCvRestController {
         }
     }
 
-    @Operation(summary = "Get cv document of candidate")
+    @Operation(summary = "Get cv document of the candidate")
     @ApiResponse(responseCode = "200", description = "GET",
             content = @Content(mediaType = "application/pdf"))
     @GetMapping(produces = APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> get(
-            @IsCandidateExist
+            @IsCandidateExist @NotNull
             @PathVariable("id") Long id) {
         log.info("Get cv of candidate with id - {}", id);
         byte[] cv = cvService.getCv(id);

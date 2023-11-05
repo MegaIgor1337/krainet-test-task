@@ -38,7 +38,7 @@ public class TestServiceImpl implements TestService {
     public TestResponseDto saveTest(TestRequestDto testRequestDto) {
         Test test = testMapper.fromRequestDtoToEntity(testRequestDto);
         Test savedTest = testRepository.save(test);
-        log.info("saved test - {}", savedTest);
+        log.info("Saved test - {}", savedTest);
         return testMapper.fromEntityToResponseDto(savedTest);
     }
 

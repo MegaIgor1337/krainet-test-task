@@ -30,8 +30,8 @@ public class DirectionServiceImpl implements DirectionService {
     @Override
     public List<DirectionResponseDto> getDirections(String name, PageRequestDto pageRequestDto) {
 
-        log.info("get list of directions on service method with name - {}, page number - {}, page size - {}",
-                name, pageRequestDto.pageNumber(), pageRequestDto.pageNumber());
+        log.info("Get list of directions on service method with name - {}, page {}",
+                name,pageRequestDto);
 
         Pageable pageable = getPageable(pageRequestDto, directionRepository.getCountOfDirections(), null);
         Specification<Direction> directionSpecification = getSpecifications(name);
@@ -48,7 +48,7 @@ public class DirectionServiceImpl implements DirectionService {
         Direction direction = directionMapper
                 .fromRequestDtoToEntity(directionRequestDto);
         Direction savedDirection = directionRepository.save(direction);
-        log.info("saved direction - {}", savedDirection);
+        log.info("Saved direction - {}", savedDirection);
         return directionMapper.fromEntityToResponseDto(savedDirection);
     }
 
@@ -58,7 +58,7 @@ public class DirectionServiceImpl implements DirectionService {
         Direction directionRequest = directionMapper.fromRequestDtoToEntity(directionRequestDto);
         directionRequest.setId(id);
         Direction updatedDirection = directionRepository.save(directionRequest);
-        log.info("updated direction - {}", updatedDirection);
+        log.info("Updated direction - {}", updatedDirection);
         return directionMapper.fromEntityToResponseDto(updatedDirection);
     }
 

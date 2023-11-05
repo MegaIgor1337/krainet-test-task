@@ -55,7 +55,7 @@ public class ImageRestController {
         }
     }
 
-    @Operation(summary = "Ger image of candidate")
+    @Operation(summary = "Ger image of the candidate")
     @ApiResponse(responseCode = "200", description = "GET",
             content = @Content(
                     array = @ArraySchema(schema = @Schema(implementation = byte[].class))))

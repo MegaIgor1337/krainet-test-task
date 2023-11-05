@@ -42,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
             File saveImage = fileRepository.saveAndFlush(image);
             candidate.setPhoto(saveImage);
             candidateRepository.saveAndFlush(candidate);
-            log.info("upload image - {}", saveImage.getName());
+            log.info("Upload image - {}", saveImage.getName());
             return fileMapper.fromEntityToResponseDto(saveImage);
         } catch (IOException e) {
             throw new ImageStorageException(e.getMessage());
@@ -51,12 +51,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] getImage(Long id) {
-        log.info("get image of the candidate with id - {}", id);
+        log.info("Get image of the candidate with id - {}", id);
         Candidate candidate = candidateRepository.findById(id).get();
         if (candidate.getPhoto() != null) {
             return candidate.getPhoto().getContent();
         } else {
-            throw new ImageNotFoundException(String.format("Image of user with id - %s not found", id));
+            throw new ImageNotFoundException(String.format("Image of the candidate with id - %s not found", id));
         }
     }
 }
