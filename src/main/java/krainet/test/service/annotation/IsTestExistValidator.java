@@ -2,9 +2,9 @@ package krainet.test.service.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import krainet.test.api.exceptions.TestNotFoundException;
 import krainet.test.service.TestService;
 import lombok.RequiredArgsConstructor;
-import krainet.test.api.exceptions.TestNotFoundException;
 
 @RequiredArgsConstructor
 public class IsTestExistValidator implements ConstraintValidator<IsTestExist, Long> {

@@ -1,13 +1,13 @@
 package krainet.test.service.impl;
 
+import krainet.test.api.exceptions.CvNotFoundException;
+import krainet.test.persistence.entity.Candidate;
 import krainet.test.persistence.entity.File;
+import krainet.test.persistence.repository.CandidateRepository;
 import krainet.test.persistence.repository.FileRepository;
 import krainet.test.service.dto.FileDto;
 import krainet.test.service.mapper.FileMapper;
 import krainet.test.util.CandidateTestData;
-import krainet.test.api.exceptions.CvNotFoundException;
-import krainet.test.persistence.entity.Candidate;
-import krainet.test.persistence.repository.CandidateRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

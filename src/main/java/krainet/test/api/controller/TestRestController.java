@@ -11,11 +11,11 @@ import jakarta.validation.constraints.NotNull;
 import krainet.test.service.TestService;
 import krainet.test.service.annotation.IsTestExist;
 import krainet.test.service.dto.PageRequestDto;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import krainet.test.service.dto.TestRequestDto;
 import krainet.test.service.dto.TestRequestFilter;
 import krainet.test.service.dto.TestResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +50,7 @@ public class TestRestController {
     @Operation(summary = "Get list of tests from DB by Name, directions page number and size if the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = TestResponseDto.class))))
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestResponseDto>> get(
             @Valid TestRequestFilter testRequestFilter,
             @Valid PageRequestDto pageRequestDto

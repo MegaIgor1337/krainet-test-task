@@ -1,11 +1,11 @@
 package krainet.test.service.mapper;
 
-import krainet.test.service.dto.TestRequestDto;
-import lombok.RequiredArgsConstructor;
 import krainet.test.persistence.entity.Direction;
 import krainet.test.persistence.entity.Test;
 import krainet.test.persistence.repository.DirectionRepository;
+import krainet.test.service.dto.TestRequestDto;
 import krainet.test.service.dto.TestResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class TestMapper {
 
     protected final DirectionRepository directionRepository;
 
-    public  TestResponseDto fromEntityToResponseDto(Test test) {
+    public TestResponseDto fromEntityToResponseDto(Test test) {
         List<Long> directionsId = null;
 
         if (test.getDirections() != null) {

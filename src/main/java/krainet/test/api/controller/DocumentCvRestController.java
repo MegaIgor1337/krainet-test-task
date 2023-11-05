@@ -6,14 +6,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
+import krainet.test.api.exceptions.BadRequestException;
 import krainet.test.api.exceptions.CvStorageException;
+import krainet.test.service.CvService;
 import krainet.test.service.annotation.IsCandidateExist;
 import krainet.test.service.annotation.ValidationCv;
+import krainet.test.service.dto.FileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import krainet.test.api.exceptions.BadRequestException;
-import krainet.test.service.CvService;
-import krainet.test.service.dto.FileDto;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +43,10 @@ public class DocumentCvRestController {
     public ResponseEntity<FileDto> add(
             @IsCandidateExist
             @PathVariable("id") Long id,
-            @ValidationCv
+            @ValidationCv @NotNull
             @RequestPart("cv")
             MultipartFile multipartFile) {
-        log.info("Adding new image of the candidate with id - {}", id);
+        log.info("Adding new cv of the candidate with id - {}", id);
         try {
             FileDto fileDto = cvService.uploadCv(multipartFile, id);
             return new ResponseEntity<>(fileDto, CREATED);
@@ -53,15 +55,22 @@ public class DocumentCvRestController {
         }
     }
 
-    @Operation(summary = "Ger cv document of candidate")
+    @Operation(summary = "Get cv document of candidate")
     @ApiResponse(responseCode = "200", description = "GET",
             content = @Content(mediaType = "application/pdf"))
     @GetMapping(produces = APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> get(
             @IsCandidateExist
             @PathVariable("id") Long id) {
-        log.info("Get image of candidate with id - {}", id);
+        log.info("Get cv of candidate with id - {}", id);
         byte[] cv = cvService.getCv(id);
-        return new ResponseEntity<>(cv, OK);
+        return new ResponseEntity<>(cv, createHeadersWithContent(id), OK);
+    }
+
+    private HttpHeaders createHeadersWithContent(Long id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="
+                                                     + "Id of the candidate - " + id + ".pdf");
+        return headers;
     }
 }

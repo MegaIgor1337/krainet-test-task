@@ -1,11 +1,11 @@
 package krainet.test.service.mapper;
 
-import krainet.test.service.dto.CandidateRequestDto;
-import krainet.test.service.dto.CandidateResponseDto;
-import krainet.test.util.CandidateTestData;
 import krainet.test.persistence.entity.Candidate;
 import krainet.test.persistence.entity.Direction;
 import krainet.test.persistence.repository.DirectionRepository;
+import krainet.test.service.dto.CandidateRequestDto;
+import krainet.test.service.dto.CandidateResponseDto;
+import krainet.test.util.CandidateTestData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

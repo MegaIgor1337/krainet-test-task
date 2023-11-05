@@ -2,9 +2,9 @@ package krainet.test.service.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import krainet.test.api.exceptions.DirectionNotFoundException;
 import krainet.test.service.DirectionService;
 import lombok.RequiredArgsConstructor;
-import krainet.test.api.exceptions.DirectionNotFoundException;
 
 @RequiredArgsConstructor
 public class IsDirectionExistValidator implements ConstraintValidator<IsDirectionExist, Long> {

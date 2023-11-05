@@ -50,6 +50,23 @@ public class GlobalExceptionHandler {
                 exception.getMessage());
     }
 
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlerImageNotFountException(ImageNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getMessage());
+    }
+
+    @ExceptionHandler(CvNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlerCvNotFountException(CvNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getMessage());
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlerMultiPartFileIsTooLarge(MaxUploadSizeExceededException exception) {
@@ -82,4 +99,13 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 exception.getMessage());
     }
+
+    @ExceptionHandler(TestResultNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlerTestResultNotFountException(TestResultNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getMessage());
+    }
+
 }

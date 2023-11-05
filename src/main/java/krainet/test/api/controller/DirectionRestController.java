@@ -10,11 +10,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import krainet.test.service.DirectionService;
 import krainet.test.service.annotation.IsDirectionExist;
+import krainet.test.service.dto.DirectionRequestDto;
 import krainet.test.service.dto.DirectionResponseDto;
 import krainet.test.service.dto.PageRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import krainet.test.service.dto.DirectionRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,17 +31,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("api/v1/directions")
 @Tag(name = "Direction Controller", description = "API for working with directions")
 public class DirectionRestController {
-
     private final DirectionService directionService;
-
 
     @Operation(summary = "Get list of directions from DB by Name, page number and size if the page")
     @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DirectionResponseDto>> get(
             @RequestParam(value = "name", required = false)
-            @Schema(description = "Direction name filter for list of directions")
             String name,
             @Valid PageRequestDto pageRequestDto
     ) {
@@ -56,9 +53,10 @@ public class DirectionRestController {
     @ApiResponse(responseCode = "201", description = "CREATE", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @PostMapping
-    public ResponseEntity<DirectionResponseDto> add(@RequestBody
-                                                    @Valid
-                                                    DirectionRequestDto directionRequestDto) {
+    public ResponseEntity<DirectionResponseDto> add(
+            @RequestBody
+            @Valid
+            DirectionRequestDto directionRequestDto) {
         log.info("Adding new direction with the name - {} and description - {}",
                 directionRequestDto.name(), directionRequestDto.description());
         DirectionResponseDto addedDirection = directionService.saveDirection(directionRequestDto);
@@ -69,14 +67,13 @@ public class DirectionRestController {
     @ApiResponse(responseCode = "201", description = "UPDATE", content = @Content(mediaType = APPLICATION_JSON_VALUE,
             array = @ArraySchema(schema = @Schema(implementation = DirectionResponseDto.class))))
     @PutMapping("/{id}")
-    public ResponseEntity<DirectionResponseDto> update(@RequestBody @Valid
-                                                       DirectionRequestDto directionRequestDto,
-                                                       @PathVariable(name = "id")
-                                                       @IsDirectionExist @NotNull Long id) {
-        log.debug("Updating Direction with id {} by the data: {} ", id, directionRequestDto);
+    public ResponseEntity<DirectionResponseDto> update(
+            @RequestBody @Valid
+            DirectionRequestDto directionRequestDto,
+            @PathVariable(name = "id")
+            @IsDirectionExist @NotNull Long id) {
+        log.debug("Updating Direction with id of the candidate - {} by the data: {} ", id, directionRequestDto);
         DirectionResponseDto responseDirection = directionService.updateDirection(id, directionRequestDto);
         return new ResponseEntity<>(responseDirection, CREATED);
     }
-
-
 }

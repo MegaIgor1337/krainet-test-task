@@ -10,13 +10,17 @@ import krainet.test.persistence.repository.CandidateRepository;
 import krainet.test.service.ImageService;
 import krainet.test.service.dto.FileDto;
 import krainet.test.service.mapper.FileMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static krainet.test.service.util.FileUtil.createFile;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -38,6 +42,7 @@ public class ImageServiceImpl implements ImageService {
             File saveImage = fileRepository.saveAndFlush(image);
             candidate.setPhoto(saveImage);
             candidateRepository.saveAndFlush(candidate);
+            log.info("upload image - {}", saveImage.getName());
             return fileMapper.fromEntityToResponseDto(saveImage);
         } catch (IOException e) {
             throw new ImageStorageException(e.getMessage());
@@ -46,16 +51,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] getImage(Long id) {
+        log.info("get image of the candidate with id - {}", id);
         Candidate candidate = candidateRepository.findById(id).get();
         if (candidate.getPhoto() != null) {
             return candidate.getPhoto().getContent();
         } else {
             throw new ImageNotFoundException(String.format("Image of user with id - %s not found", id));
         }
-    }
-    private File createFile(MultipartFile multipartFile) throws IOException {
-        return File.builder()
-                .name(multipartFile.getOriginalFilename())
-                .content(multipartFile.getBytes()).build();
     }
 }

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "candidate_test")
-public class CandidateTest {
+public class TestResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

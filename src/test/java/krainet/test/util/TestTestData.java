@@ -1,11 +1,11 @@
 package krainet.test.util;
 
-import lombok.experimental.UtilityClass;
 import krainet.test.persistence.entity.Direction;
 import krainet.test.persistence.entity.Test;
 import krainet.test.service.dto.TestRequestDto;
 import krainet.test.service.dto.TestRequestFilter;
 import krainet.test.service.dto.TestResponseDto;
+import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 

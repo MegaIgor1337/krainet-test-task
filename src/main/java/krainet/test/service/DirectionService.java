@@ -1,8 +1,8 @@
 package krainet.test.service;
 
+import krainet.test.service.dto.DirectionRequestDto;
 import krainet.test.service.dto.DirectionResponseDto;
 import krainet.test.service.dto.PageRequestDto;
-import krainet.test.service.dto.DirectionRequestDto;
 
 import java.util.List;
 

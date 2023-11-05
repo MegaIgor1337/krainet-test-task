@@ -12,17 +12,24 @@ import krainet.test.api.exceptions.CvNotFoundException;
 import krainet.test.persistence.entity.Candidate;
 import krainet.test.service.CvService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
+import static krainet.test.service.util.FileUtil.createFile;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CvServiceImpl implements CvService {
     private final CandidateRepository candidateRepository;
     private final FileRepository fileRepository;
     private final FileMapper fileMapper;
+
     @Override
+    @Transactional
     public FileDto uploadCv(MultipartFile multipartFile, Long id) throws CvStorageException {
         try {
             File cv = createFile(multipartFile);
@@ -34,6 +41,7 @@ public class CvServiceImpl implements CvService {
             File saveCv = fileRepository.saveAndFlush(cv);
             candidate.setCv(saveCv);
             candidateRepository.saveAndFlush(candidate);
+            log.info("Upload cv - {}", saveCv.getName());
             return fileMapper.fromEntityToResponseDto(saveCv);
         } catch (IOException e) {
             throw new CvStorageException(e.getMessage());
@@ -42,6 +50,7 @@ public class CvServiceImpl implements CvService {
 
     @Override
     public byte[] getCv(Long id) {
+        log.info("get cv of the candidate with id - {}", id);
         Candidate candidate = candidateRepository.findById(id).get();
         if (candidate.getCv() != null) {
             return candidate.getCv().getContent();
@@ -49,12 +58,4 @@ public class CvServiceImpl implements CvService {
             throw new CvNotFoundException(String.format("Cv of user with id - %s not found", id));
         }
     }
-
-
-    private File createFile(MultipartFile multipartFile) throws IOException {
-        return File.builder()
-                .name(multipartFile.getOriginalFilename())
-                .content(multipartFile.getBytes()).build();
-    }
-
 }

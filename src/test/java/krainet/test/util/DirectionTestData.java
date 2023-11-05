@@ -5,7 +5,6 @@ import krainet.test.persistence.entity.Test;
 import krainet.test.service.dto.DirectionRequestDto;
 import krainet.test.service.dto.DirectionResponseDto;
 import lombok.experimental.UtilityClass;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 

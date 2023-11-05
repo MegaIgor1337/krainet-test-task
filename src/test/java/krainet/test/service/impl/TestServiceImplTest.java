@@ -1,19 +1,18 @@
 package krainet.test.service.impl;
 
+import krainet.test.persistence.entity.Test;
+import krainet.test.persistence.repository.TestRepository;
 import krainet.test.service.dto.PageRequestDto;
 import krainet.test.service.dto.TestRequestDto;
 import krainet.test.service.dto.TestRequestFilter;
 import krainet.test.service.dto.TestResponseDto;
 import krainet.test.service.mapper.TestMapper;
 import krainet.test.util.TestTestData;
-import krainet.test.persistence.entity.Test;
-import krainet.test.persistence.repository.TestRepository;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 

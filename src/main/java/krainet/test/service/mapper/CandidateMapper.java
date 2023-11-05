@@ -14,9 +14,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CandidateMapper {
-    private final DirectionMapper directionMapper;
     private final DirectionRepository directionRepository;
-
 
     public CandidateResponseDto fromEntityToResponseDto(Candidate candidate) {
         List<Long> directionsDto;
@@ -28,7 +26,7 @@ public class CandidateMapper {
                     .map(Direction::getId).toList();
         }
 
-        CandidateResponseDto candidateResponseDto = CandidateResponseDto.builder()
+        return CandidateResponseDto.builder()
                 .id(candidate.getId())
                 .firstName(candidate.getFirstName())
                 .lastName(candidate.getLastName())
@@ -36,8 +34,6 @@ public class CandidateMapper {
                 .description(candidate.getDescription())
                 .directionsId(directionsDto)
                 .build();
-
-        return candidateResponseDto;
 
     }
 

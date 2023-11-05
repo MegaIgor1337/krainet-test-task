@@ -2,10 +2,10 @@ package krainet.test.api.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import krainet.test.service.dto.CandidateResponseDto;
-import krainet.test.util.CandidateTestData;
 import krainet.test.PostgreSQLTestContainerExtension;
 import krainet.test.service.dto.CandidateRequestDto;
+import krainet.test.service.dto.CandidateResponseDto;
+import krainet.test.util.CandidateTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 
 import static krainet.test.util.CandidateTestData.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpMethod.*;
-import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
@@ -134,7 +134,7 @@ public class CandidateRestControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnIsCreateWithoutDirectionsIdWhenUpdate() {
+    public void shouldReturnBadRequestIfTestIdNotExist() {
         CandidateRequestDto candidateRequestDto = CandidateTestData.createRequestDtoWithoutDirectionsId();
 
         HttpEntity<CandidateRequestDto> requestEntity = new HttpEntity<>(candidateRequestDto);
@@ -186,8 +186,6 @@ public class CandidateRestControllerIntegrationTest {
         List<CandidateResponseDto> responseBody = objectMapper
                 .readValue(response.getBody(), new TypeReference<>() {
                 });
-
-        System.out.println(responseBody);
 
         assertEquals(2, responseBody.size());
         assertEquals(OK, response.getStatusCode());

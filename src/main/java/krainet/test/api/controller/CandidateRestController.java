@@ -36,25 +36,26 @@ public class CandidateRestController {
             content = @Content(
                     array = @ArraySchema(schema = @Schema(implementation = CandidateResponseDto.class))))
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<CandidateResponseDto> add(@Valid
-                                                    @RequestBody
-                                                    CandidateRequestDto candidateRequestDto) {
+    public ResponseEntity<CandidateResponseDto> add(
+            @Valid
+            @RequestBody
+            CandidateRequestDto candidateRequestDto) {
         log.info("Adding new candidate with - {}", candidateRequestDto);
-
         CandidateResponseDto addedCandidate = candidateService.saveCandidate(candidateRequestDto);
         return new ResponseEntity<>(addedCandidate, CREATED);
-
     }
 
     @Operation(summary = "Get list of candidates from DB")
     @ApiResponse(responseCode = "200", description = "GET",
             content = @Content(mediaType = APPLICATION_JSON_VALUE,
                     array = @ArraySchema(schema = @Schema(implementation = CandidateResponseDto.class))))
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CandidateResponseDto>> get(
-            @RequestParam(name = "sort", required = false) List<SortCandidateFields> sortFields,
-            @RequestParam(name = "order", required = false, defaultValue = "ASC") Sort.Direction order,
-            @Valid CandidateFilter candidateFilter,
+            @RequestParam(name = "sort", required = false)
+            List<SortCandidateFields> sortFields,
+            @RequestParam(name = "order", required = false, defaultValue = "ASC")
+            Sort.Direction order,
+            @Valid CandidateRequestFilter candidateFilter,
             @Valid PageRequestDto pageRequestDto
     ) {
         log.info("Getting list of directions");
@@ -70,8 +71,7 @@ public class CandidateRestController {
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<CandidateResponseDto> update(
             @PathVariable("id") @IsCandidateExist Long id,
-            @Valid
-            @RequestBody
+            @Valid @RequestBody
             CandidateRequestDto candidateRequestDto) {
         log.info("Updating candidate with - {}", candidateRequestDto);
         CandidateResponseDto updatedCandidate = candidateService.updateCandidate(id, candidateRequestDto);

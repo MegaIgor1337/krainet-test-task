@@ -18,38 +18,42 @@ public class FileTestData {
     private static final String PATH_TO_IMAGE = "/images/test-image.png";
     private static final String PATH_TO_PDF_FILE = "/docks/test-pdf-file.pdf";
     public static final String IMAGE_URL_UPLOAD = String.format("/api/v1/candidates/%s/image", CANDIDATE_ID);
-    public static final String IMAGE_URL_UPLOAD_INVALID = String.format("/api/v1/candidates/%s/image", INVALID_CANDIDATE_ID);
+    public static final String IMAGE_URL_UPLOAD_INVALID = String
+            .format("/api/v1/candidates/%s/image", INVALID_CANDIDATE_ID);
+    public static final String СМ_URL_UPLOAD_INVALID = String
+            .format("/api/v1/candidates/%s/image", INVALID_CANDIDATE_ID);
+    public static final String CV_URL_UPLOAD = String.format("/api/v1/candidates/%s/cv", CANDIDATE_ID);
 
     public static File getImage() throws IOException {
-        InputStream imageStream = CandidateTestData.class.getResourceAsStream(PATH_TO_IMAGE);
+        InputStream imageStream = FileTestData.class.getResourceAsStream(PATH_TO_IMAGE);
         return new File(1L, "test-image.png", IOUtils.toByteArray(imageStream));
     }
 
     public static File getDocument() throws IOException {
-        InputStream documentStream = CandidateTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
+        InputStream documentStream = FileTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
         return new File(2L, "test-pdf-file.pdf", IOUtils.toByteArray(documentStream));
     }
 
     public static MockMultipartFile getRightMultipartImage() throws IOException {
-        InputStream documentStream = CandidateTestData.class.getResourceAsStream(PATH_TO_IMAGE);
+        InputStream documentStream = FileTestData.class.getResourceAsStream(PATH_TO_IMAGE);
         return new MockMultipartFile("image", "test-image-file.png",
                 ValidationConstants.IMAGE_PNG_VALUE, IOUtils.toByteArray(documentStream));
     }
 
     public static MockMultipartFile getBadMultipartImage() throws IOException {
-        InputStream documentStream = CandidateTestData.class.getResourceAsStream(PATH_TO_IMAGE);
+        InputStream documentStream = FileTestData.class.getResourceAsStream(PATH_TO_IMAGE);
         return new MockMultipartFile("test-image-file", "test-image-file.png",
                 ValidationConstants.DOCUMENT_PDF_VALUE, IOUtils.toByteArray(documentStream));
     }
 
-    public static MultipartFile getRightMultipartPdfFile() throws IOException {
-        InputStream documentStream = CandidateTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
-        return new MockMultipartFile("test-pdf-file", "test-pdf-file.pdf",
+    public static MockMultipartFile getRightMultipartPdfFile() throws IOException {
+        InputStream documentStream = FileTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
+        return new MockMultipartFile("cv", "test-pdf-file.pdf",
                 ValidationConstants.DOCUMENT_PDF_VALUE, IOUtils.toByteArray(documentStream));
     }
 
-    public static MultipartFile getBadMultipartPdfFile() throws IOException {
-        InputStream documentStream = CandidateTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
+    public static MockMultipartFile getBadMultipartPdfFile() throws IOException {
+        InputStream documentStream = FileTestData.class.getResourceAsStream(PATH_TO_PDF_FILE);
         return new MockMultipartFile("test-pdf-file", "test-pdf-file.pdf",
                 ValidationConstants.IMAGE_PNG_VALUE, IOUtils.toByteArray(documentStream));
     }

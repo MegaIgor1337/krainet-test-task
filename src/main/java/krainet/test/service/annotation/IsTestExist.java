@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = IsTestExistValidator.class)
-@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IsTestExist {
     String message() default "Invalid test id: test not found";

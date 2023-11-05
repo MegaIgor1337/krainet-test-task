@@ -34,7 +34,7 @@ public class ImageRestControllerTest {
 
         when(candidateService.isCandidateExist(CANDIDATE_ID)).thenReturn(true);
 
-        mockMvc.perform(multipart(HttpMethod.POST, IMAGE_URL_UPLOAD)
+        mockMvc.perform(multipart(HttpMethod.PUT, IMAGE_URL_UPLOAD)
                         .file(request))
                 .andExpect(status().isCreated());
     }
@@ -46,7 +46,7 @@ public class ImageRestControllerTest {
 
         when(candidateService.isCandidateExist(CANDIDATE_ID)).thenReturn(true);
 
-        mockMvc.perform(multipart(HttpMethod.POST, IMAGE_URL_UPLOAD)
+        mockMvc.perform(multipart(HttpMethod.PUT, IMAGE_URL_UPLOAD)
                         .file(request))
                 .andExpect(status().isBadRequest());
     }
@@ -58,7 +58,7 @@ public class ImageRestControllerTest {
 
         when(candidateService.isCandidateExist(INVALID_CANDIDATE_ID)).thenReturn(false);
 
-        mockMvc.perform(multipart(HttpMethod.POST, IMAGE_URL_UPLOAD_INVALID)
+        mockMvc.perform(multipart(HttpMethod.PUT, IMAGE_URL_UPLOAD_INVALID)
                         .file(request))
                 .andExpect(status().isNotFound());
     }

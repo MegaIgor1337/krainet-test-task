@@ -7,14 +7,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
+import krainet.test.api.exceptions.BadRequestException;
+import krainet.test.api.exceptions.ImageStorageException;
+import krainet.test.service.ImageService;
 import krainet.test.service.annotation.IsCandidateExist;
 import krainet.test.service.annotation.ValidationImage;
 import krainet.test.service.dto.FileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import krainet.test.api.exceptions.BadRequestException;
-import krainet.test.api.exceptions.ImageStorageException;
-import krainet.test.service.ImageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,23 +32,23 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping("api/v1/candidates/{id}/image")
 @Tag(name = "Image Controller", description = "API for working with images of candidates")
 public class ImageRestController {
-    private final ImageService fileService;
+    private final ImageService imageService;
 
-    @Operation(summary = "Put image of candidate")
+    @Operation(summary = "Put image of the candidate")
     @ApiResponse(responseCode = "201", description = "CREATE",
             content = @Content(
                     array = @ArraySchema(schema = @Schema(implementation = FileDto.class))))
-    @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<FileDto> upload(
+            @IsCandidateExist
+            @PathVariable("id") Long id,
             @NotNull
             @ValidationImage
             @RequestPart("image")
-            MultipartFile image,
-            @IsCandidateExist
-            @PathVariable("id") Long id) {
+            MultipartFile image) {
         log.info("Adding new image of the candidate with id - {}", id);
         try {
-            FileDto fileDto = fileService.uploadImage(image, id);
+            FileDto fileDto = imageService.uploadImage(image, id);
             return new ResponseEntity<>(fileDto, CREATED);
         } catch (ImageStorageException e) {
             throw new BadRequestException(e.getMessage());
@@ -64,8 +64,7 @@ public class ImageRestController {
             @IsCandidateExist
             @PathVariable("id") Long id) {
         log.info("Get image of candidate with id - {}", id);
-        byte[] image = fileService.getImage(id);
+        byte[] image = imageService.getImage(id);
         return new ResponseEntity<>(image, OK);
     }
-
 }

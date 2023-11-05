@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import krainet.test.api.controller.TestRestController;
 import krainet.test.service.DirectionService;
 import krainet.test.service.TestService;
-import krainet.test.service.dto.PageRequestDto;
 import krainet.test.service.dto.TestRequestDto;
-import krainet.test.service.dto.TestRequestFilter;
 import krainet.test.util.TestTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -123,8 +118,6 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithoutParams() throws Exception {
-        when(testService.getTests(null, new PageRequestDto(0, null)))
-                .thenReturn(new ArrayList<>());
 
         mockMvc.perform(MockMvcRequestBuilders.get(TestTestData.TEST_URL)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -135,9 +128,7 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithName() throws Exception {
-        when(testService.getTests(new TestRequestFilter("Test 1", null),
-                new PageRequestDto(0, null)))
-                .thenReturn(new ArrayList<>());
+
 
         mockMvc.perform(MockMvcRequestBuilders.get(TestTestData.TEST_URL_PAGE_TEST_FILTER_NAME)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -148,9 +139,7 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithDirectionsId() throws Exception {
-        when(testService.getTests(new TestRequestFilter(null, List.of(1L)),
-                new PageRequestDto(0, null)))
-                .thenReturn(new ArrayList<>());
+
         when(directionService.isDirectionExist(1L)).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders.get(TestTestData.TEST_URL_PAGE_TEST_FILTER_ID_DIRECTIONS)
@@ -162,9 +151,6 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPageData() throws Exception {
-        when(testService.getTests(new TestRequestFilter(null, null),
-                new PageRequestDto(0, 2)))
-                .thenReturn(new ArrayList<>());
 
         mockMvc.perform(MockMvcRequestBuilders.get(TestTestData.TEST_URL_PAGE_DATA)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -175,9 +161,7 @@ public class TestRestControllerTest {
 
     @Test
     public void shouldReturnOkWhenGetIsSuccessfulWithPageSize() throws Exception {
-        when(testService.getTests(new TestRequestFilter(null, null),
-                new PageRequestDto(0, 3)))
-                .thenReturn(new ArrayList<>());
+
 
         mockMvc.perform(MockMvcRequestBuilders.get(TestTestData.TEST_URL_PAGE_SIZE)
                         .contentType(MediaType.APPLICATION_JSON))

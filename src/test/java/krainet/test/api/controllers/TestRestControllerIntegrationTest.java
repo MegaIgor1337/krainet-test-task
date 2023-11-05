@@ -2,10 +2,10 @@ package krainet.test.api.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import krainet.test.PostgreSQLTestContainerExtension;
 import krainet.test.service.dto.TestRequestDto;
 import krainet.test.service.dto.TestResponseDto;
 import krainet.test.util.TestTestData;
-import krainet.test.PostgreSQLTestContainerExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

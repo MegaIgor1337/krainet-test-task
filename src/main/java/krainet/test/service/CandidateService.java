@@ -9,7 +9,7 @@ public interface CandidateService {
     CandidateResponseDto saveCandidate(CandidateRequestDto candidateRequestDto);
 
     List<CandidateResponseDto> getCandidates(List<SortCandidateFields> sortCandidateFields,
-                                             Sort.Direction order, CandidateFilter candidateFilter,
+                                             Sort.Direction order, CandidateRequestFilter candidateFilter,
                                              PageRequestDto pageRequestDto);
 
     boolean isCandidateExist(Long id);

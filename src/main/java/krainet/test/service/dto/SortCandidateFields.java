@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum SortCandidateFields {
+public enum SortCandidateFields implements SortFields {
     ID("id"),
     FIRST_NAME("firstName"),
     LAST_NAME("lastName"),

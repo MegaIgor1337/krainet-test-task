@@ -5,7 +5,6 @@ import krainet.test.api.controller.CandidateRestController;
 import krainet.test.service.CandidateService;
 import krainet.test.service.DirectionService;
 import krainet.test.service.dto.CandidateRequestDto;
-import krainet.test.service.dto.PageRequestDto;
 import krainet.test.util.CandidateTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.ArrayList;
 
 import static krainet.test.util.CandidateTestData.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,7 +36,7 @@ public class CandidateRestControllerTest {
 
     @Test
     void shouldBeStatusIsCreatedWhenCreateCandidateWithoutIDirectionsIsSuccessful() throws Exception {
-        CandidateRequestDto request = CandidateTestData.createRequestDtoWithoutDirectionsId();
+        CandidateRequestDto request = createRequestDtoWithoutDirectionsId();
 
         mockMvc.perform(MockMvcRequestBuilders.post(CANDIDATE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -49,7 +46,7 @@ public class CandidateRestControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenInvalidJsonRequest() throws Exception {
-        String invalidRequestBody = CandidateTestData.getInvalidJson();
+        String invalidRequestBody = getInvalidJson();
 
         mockMvc.perform(MockMvcRequestBuilders.post(CANDIDATE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,12 +56,12 @@ public class CandidateRestControllerTest {
 
     @Test
     public void shouldReturnCreatedWhenUpdateIsSuccessful() throws Exception {
-        CandidateRequestDto request = CandidateTestData.createRequestDtoWithDirectionsId();
+        CandidateRequestDto request = createRequestDtoWithDirectionsId();
 
         when(candidateService.isCandidateExist(CandidateTestData.ID)).thenReturn(true);
         when(directionService.isDirectionExist(any(Long.class))).thenReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(CandidateTestData.CANDIDATE_URL_PUT)
+        mockMvc.perform(MockMvcRequestBuilders.put(CANDIDATE_URL_PUT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());

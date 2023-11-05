@@ -2,8 +2,7 @@ package krainet.test.util;
 
 import krainet.test.persistence.entity.Candidate;
 import krainet.test.persistence.entity.Direction;
-import krainet.test.service.dto.CandidateRequestDto;
-import krainet.test.service.dto.CandidateResponseDto;
+import krainet.test.service.dto.*;
 import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
@@ -170,5 +169,110 @@ public class CandidateTestData {
                "}";
     }
 
+    public static List<Candidate> createListOfCandidates() {
+        return List.of(
+                Candidate.builder()
+                        .id(1L)
+                        .firstName("First Name Candidate 1")
+                        .lastName("Last Name Candidate 1")
+                        .fatherName("Father Name Candidate 1")
+                        .description("Description 1")
+                        .directions(List.of(
+                                Direction.builder()
+                                        .id(1L)
+                                        .name("Direction")
+                                        .description("Description")
+                                        .build()
+                        ))
+                        .build(),
+                Candidate.builder()
+                        .id(2L)
+                        .firstName("First Name Candidate 2")
+                        .lastName("Last Name Candidate 2")
+                        .fatherName("Father Name Candidate 2")
+                        .description("Description 2")
+                        .directions(List.of(
+                                Direction.builder()
+                                        .id(2L)
+                                        .name("Direction")
+                                        .description("Description")
+                                        .build()
+                        ))
+                        .build()
+        );
+    }
 
+
+    public static List<Candidate> createListOfCandidatesAfterFilter() {
+        return List.of(
+                Candidate.builder()
+                        .id(1L)
+                        .firstName("First Name Candidate 1")
+                        .lastName("Last Name Candidate 1")
+                        .fatherName("Father Name Candidate 1")
+                        .description("Description 1")
+                        .directions(List.of(
+                                Direction.builder()
+                                        .id(1L)
+                                        .name("Direction")
+                                        .description("Description")
+                                        .build()
+                        ))
+                        .build()
+        );
+    }
+
+    public static List<CandidateResponseDto> createListOfCandidateResponseDto() {
+        return List.of(
+                CandidateResponseDto.builder()
+                        .id(1L)
+                        .firstName("First Name Candidate 1")
+                        .lastName("Last Name Candidate 1")
+                        .fatherName("Father Name Candidate 1")
+                        .description("Description 1")
+                        .directionsId(List.of(1L))
+                        .build(),
+                CandidateResponseDto.builder()
+                        .id(2L)
+                        .firstName("First Name Candidate 2")
+                        .lastName("Last Name Candidate 2")
+                        .fatherName("Father Name Candidate 2")
+                        .description("Description 2")
+                        .directionsId(List.of(2L))
+                        .build()
+        );
+    }
+
+    public static List<CandidateResponseDto> createListOfCandidateResponseDtoAfterFilter() {
+        return List.of(
+                CandidateResponseDto.builder()
+                        .id(1L)
+                        .firstName("First Name Candidate 1")
+                        .lastName("Last Name Candidate 1")
+                        .fatherName("Father Name Candidate 1")
+                        .description("Description 1")
+                        .directionsId(List.of(1L))
+                        .build()
+        );
+    }
+
+    public static PageRequestDto createPageRequestDto() {
+        return PageRequestDto.builder()
+                .pageNumber(0)
+                .pageSize(2)
+                .build();
+    }
+
+    public static List<SortCandidateFields> createListOfSortCandidateFields() {
+        return List.of(
+                SortCandidateFields.FIRST_NAME,
+                SortCandidateFields.DIRECTIONS_ID
+        );
+    }
+
+    public static CandidateRequestFilter createCandidateFilter() {
+        return CandidateRequestFilter.builder()
+                .firstName("First Name Candidate 1")
+                .build();
+    }
 }

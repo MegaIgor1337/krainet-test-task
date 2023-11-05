@@ -1,33 +1,34 @@
 package krainet.test.service.impl;
 
-import krainet.test.persistence.entity.Test;
-import krainet.test.service.CandidateService;
-import krainet.test.service.dto.*;
-import krainet.test.service.util.PageUtil;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import krainet.test.persistence.entity.Candidate;
 import krainet.test.persistence.repository.CandidateRepository;
+import krainet.test.service.CandidateService;
+import krainet.test.service.dto.*;
 import krainet.test.service.mapper.CandidateMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static krainet.test.service.util.PageUtil.getPageable;
+import static krainet.test.service.util.SortUtil.getSort;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CandidateServiceImpl implements CandidateService {
     private final CandidateRepository candidateRepository;
     private final CandidateMapper candidateMapper;
 
     @Override
+    @Transactional
     public CandidateResponseDto saveCandidate(CandidateRequestDto candidateRequestDto) {
         Candidate candidate = candidateMapper.fromRequestDtoToEntity(candidateRequestDto);
         Candidate savedCandidate = candidateRepository.save(candidate);
@@ -37,9 +38,9 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public List<CandidateResponseDto> getCandidates(List<SortCandidateFields> sortCandidateFields,
-                                                    Sort.Direction direction, CandidateFilter candidateFilter,
+                                                    Sort.Direction direction, CandidateRequestFilter candidateFilter,
                                                     PageRequestDto pageRequestDto) {
-        log.info("Get list of tests on service method with filter - {}, pageable - {}",
+        log.info("get list of tests on service method with filter - {}, pageable - {}",
                 candidateFilter, pageRequestDto);
 
         Sort sort = getSort(sortCandidateFields, direction);
@@ -57,6 +58,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    @Transactional
     public CandidateResponseDto updateCandidate(Long id, CandidateRequestDto candidateRequestDto) {
         Candidate candidate = candidateMapper.fromRequestDtoToEntity(candidateRequestDto);
         candidate.setId(id);
@@ -65,8 +67,11 @@ public class CandidateServiceImpl implements CandidateService {
         return candidateMapper.fromEntityToResponseDto(updatedCandidate);
     }
 
-    private Specification<Candidate> getSpecifications(CandidateFilter candidateFilter) {
+    private Specification<Candidate> getSpecifications(CandidateRequestFilter candidateFilter) {
         Specification<Candidate> specification = Specification.where(null);
+        if (candidateFilter == null) {
+            return specification;
+        }
         if (candidateFilter.firstName() != null && !candidateFilter.firstName().isBlank()) {
             specification = specification.and((root, query, cb) ->
                     cb.equal(root.get("firstName"), candidateFilter.firstName()));
@@ -82,14 +87,6 @@ public class CandidateServiceImpl implements CandidateService {
         return specification;
     }
 
-    private Sort getSort(List<SortCandidateFields> sortCandidateFields, Sort.Direction direction) {
-        List<Sort.Order> orders = new ArrayList<>();
-        if (sortCandidateFields != null && !sortCandidateFields.isEmpty()) {
-            for (SortCandidateFields sortField : sortCandidateFields) {
-                orders.add(new Sort.Order(direction, sortField.getEntityFieldName()));
-            }
-        }
-        return Sort.by(orders);
-    }
+
 }
 

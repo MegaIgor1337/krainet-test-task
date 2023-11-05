@@ -8,5 +8,4 @@ public interface CvService {
     FileDto uploadCv(MultipartFile multipartFile, Long id) throws CvStorageException;
 
     byte[] getCv(Long id);
-
 }
